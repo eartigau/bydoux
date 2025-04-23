@@ -13,7 +13,7 @@ This repository contains tools and notebooks for analyzing and comparing financi
 
 The list of FNBs (ETFs) and their tickers used in `bydoux_tools` is maintained in a shared Google Sheet:
 
-👉 [Google Sheet: FNB & Ticker Reference](https://docs.google.com/spreadsheets/d/1kQwQnQvQw8FNB_TICKER_LIST_LINK)
+👉 [Google Sheet: FNB & Ticker Reference]([https://docs.google.com/spreadsheets/d/1kQwQnQvQw8](https://docs.google.com/spreadsheets/d/1bx3oBEFAmksB6no7_DV7AP_qM9zQ5iHUepc9wcPjXO8/edit?gid=0#gid=0))
 
 Please refer to this sheet for the most up-to-date list of supported tickers and their details.
 
