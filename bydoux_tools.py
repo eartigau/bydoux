@@ -22,6 +22,31 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 
+import glob
+
+def pdollar(x):
+    """
+    Convert a number to a string with a dollar sign and two decimal places.
+    :param x: the number to convert
+    :return: the string with the dollar sign and two decimal places
+    Also add spaces between thousands and two decimal places.
+    1.0 -> '1,00$' and 1000.0 -> '1 000,00$'
+    Put the $ at the end with the French format.
+    """
+    if np.isnan(x):
+        return '---'
+    else:
+        # Convert to float and format with two decimal places, using space as thousands separator and comma as decimal
+        x = float(x)
+        s = f"{abs(x):,.2f}".replace(",", "X").replace(".", ",").replace("X", " ")
+        if x < 0:
+            return f"-{s}$"
+        else:
+            return f"{s}$"
+        
+
+
+
 def get_bydoux_path():
     # This function returns the path to the bydoux data directory
     # It is set to ~/bydoux_data/ by default
@@ -53,6 +78,69 @@ def get_bydoux_path():
 
     return bydoux_path
 
+from tqdm   import tqdm
+def get_disnat_summary():
+    # all files are in the disnat directory and are in the xlsx format
+    # just copy-paste from the website and any duplicate will be handled. It's
+    # ok if multiple sheets have the same transaction.
+
+    xlsx_files =  glob.glob(get_bydoux_path()+'disnat/*xlsx')
+
+    for ifile, xlsx_file in enumerate(xlsx_files):
+        df = pd.read_excel(xlsx_file)  # Change sheet_name if needed
+
+        # Convert the pandas DataFrame to an Astropy Table
+        table = Table.from_pandas(df)
+
+        # check if the table is empty
+        if len(table) == 0:
+            print('Empty table')
+            continue
+
+        prix = np.array(table['Prix'],dtype = str)
+        prix_float = np.zeros(len(prix))
+        for i in range(len(prix)):
+            try:
+                prix_float[i] = float(prix[i].replace(',','.'))
+            except:
+                prix_float[i] = np.nan
+        table['Prix'] = prix_float
+
+        # set 'Prix' as 'object'
+        table['IFILE'] = ifile
+        #if first file, create a new table
+        if 'tbl' not in locals():
+            tbl = table
+        else:
+            if len(table) !=0:
+                # otherwise, append to the existing table
+                tbl = vstack([tbl, table])
+
+    tbl['mjd'] = 0.
+    for i in range(len(tbl)):
+        # if transaction date is missing, use settlement date
+        if '20' not in tbl['Date de transaction'][i]:
+            tbl['Date de transaction'][i] = tbl['Date de règlement'][i]
+        tbl['mjd'][i] = Time(tbl['Date de transaction'][i]).mjd
+
+
+    duplicates = np.zeros(len(tbl), dtype=bool)
+
+    dates = tbl['Date de transaction'].data
+    montants = tbl['Montant de l\'opération'].data
+    ifile = tbl['IFILE'].data
+    for i in tqdm(range(len(tbl)), desc='Removing duplicates'):
+        for j in range(i+1, len(tbl)):
+            cond1 = dates[i] == dates[j]
+            cond2 = montants[i] == montants[j]
+            cond3 = ifile[i] != ifile[j]
+            if cond1 and cond2 and cond3:
+                duplicates[j] = True
+    tbl = tbl[duplicates == False]
+
+
+
+    return tbl
 
 def mjd2workday(mjd):
     # Convert Modified Julian Date (MJD) to a custom "workday" index.
@@ -320,7 +408,7 @@ def get_sp500_history():
 
     return all_sp500
 
-def read_quotes(ticker, force = False, verbose = False):
+def read_quotes(ticker, force = False, verbose = False, try_failed = False):
     """
     Reads and updates (if needed) the quotes for a given ticker, including dividend-adjusted close.
 
@@ -332,133 +420,183 @@ def read_quotes(ticker, force = False, verbose = False):
     Returns:
         Table: Astropy Table with quote data.
     """
+    updated_cols = False  # Flag to track if columns were updated
+
     if verbose:
         printc(f'Reading quotes for {ticker}')
 
-    outname = get_bydoux_path()+'/quotes/' + ticker  + '.fits'
+    # Construct the output filename for the FITS file containing the quotes
+    outname = get_bydoux_path()+'quotes/' + ticker  + '.fits'
+
+    # Path for a token file indicating a failed download
+    flag_failed_file = get_bydoux_path()+'quotes/' + ticker  + '_failed.token'
+    # If a failed token exists and we're not retrying, skip this ticker
+    if not try_failed and os.path.isfile(flag_failed_file):
+        printc(f'Failed to read {ticker} from Yahoo')
+        printc('We will not try again')
+        return None
+    
+    # If retrying, remove the failed token so we can try again
+    if try_failed and os.path.isfile(flag_failed_file):
+        os.remove(flag_failed_file)
+        printc(f'We will try again to read {ticker} from Yahoo')
 
     # If force is set and file exists, remove it to force re-download
-    if force and os.path.exists(outname):
+    if os.path.isfile(outname) and force:
+        printc(f'Forcing re-download of {ticker}')
         os.remove(outname)
 
-    if os.path.exists(outname):
-        # Read existing table
+    # If the FITS file already exists, read it
+    if os.path.isfile(outname):
+        print(f'We have the file {outname}')
         tbl = Table.read(outname)
-        # Find the last date in the table
-        last = tbl['mjd'].max()
+
+        # Find the last modification date of the FITS file (in MJD)
+        last =  Time(os.path.getctime(outname),format='unix').mjd
         delta_time = Time.now().mjd - last
 
-        # If data is outdated, fetch only the missing period
-        if delta_time > 1:
-            # Choose period based on how old the data is
-            # '1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y'
-            if delta_time < 5:
-                period = '5d'
-            elif delta_time < 30:
-                period = '1mo'
-            elif delta_time < 90:
-                period = '3mo'
-            elif delta_time < 180:
-                period = '6mo'
-            elif delta_time < 365:
-                period = '1y'
-            elif delta_time < 2*365:
-                period = '2y'
-            elif delta_time < 5*365:
-                period = '5y'
-            else:
-                period = 'max'
-            
-            # Download new data for the missing period
-            data2 = yf.Ticker(ticker).history(period=period)
-            tbl2 = Table()
-            tbl2['date'] =  Time(data2.index).iso
-            tbl2['mjd'] = Time(data2.index).mjd
-            dd = dict(data2)
-            for col in dd.keys():
-                tbl2[col] = np.array(data2[col])
-            tbl2['Close_dividends'] = np.array(data2['Close'])
-            # Only keep new rows
-            keep = tbl2['mjd'] > np.max(tbl['mjd'])
-            if np.sum(keep) != 0:
-                tbl2 = tbl2[keep]
-                tbl = vstack([tbl, tbl2])
+        # Adjust delta_time if today is Saturday or Sunday (markets closed)
+        if  np.floor(Time.now().mjd % 7) == 3:  # Saturday
+            delta_time -=1
+        if  np.floor(Time.now().mjd % 7) == 4:  # Sunday
+            delta_time -=2
+
     else:
-        # Download all available data if no file exists
-        data = yf.Ticker(ticker).history(period='max')
-        if len(data) != 0:
-            tbl = Table()
-            tbl['date'] =  Time(data.index).iso
-            tbl['mjd'] = Time(data.index).mjd
-            dd = dict(data)
-            for col in dd.keys():
-                tbl[col] = np.array(data[col])
+        # Otherwise, download the data from Yahoo Finance
+        print(f'We do not have the file {outname}, downloading it from Yahoo')
+        updated_cols = True
+        try:
+            data = yf.Ticker(ticker).history(period='max')
+        except:
+            data = pd.DataFrame()
 
-    # Copy close price for dividend adjustment
-    tbl['Close_dividends'] = np.array(tbl['Close'])
+        # If download failed and not retrying, create a failed token and return None
+        if data.empty and not try_failed:
+            printc(f'Failed to read {ticker} from Yahoo')
+            with open(flag_failed_file, 'w') as f:
+                f.write('Failed to read from Yahoo')
+            return None
 
-    # Remove rows where close price is zero (bad data)
-    bad = tbl['Close_dividends'] == 0
-    tbl = tbl[bad == False]
+        # Create an Astropy Table from the downloaded data
+        tbl = Table()
+        tbl['date'] =  Time(data.index).iso
+        tbl['mjd'] = Time(data.index).mjd
+        dd = dict(data)
+        for col in dd.keys():
+            tbl[col] = np.array(data[col])
+        tbl['Close_dividends'] = np.array(data['Close'])
+        delta_time = 0.0
 
-    # Apply dividend adjustment: increase value by dividend fraction for all subsequent dates
-    for i in range(len(tbl)):
-        if tbl['Dividends'][i] > 0:
-            gain_frac = 1+tbl['Dividends'][i]/tbl['Close_dividends'][i]
-            tbl['Close_dividends'][i:] *= gain_frac
 
-    # Compute log of adjusted close price
-    tbl['log_close'] = np.log(tbl['Close_dividends'])
 
-    # Optionally print and write the table to disk
-    if verbose:
-        printc(f'Writing {outname}')
+    print(delta_time)
 
-    # Compute yearly running dividend yield
-    mjd = np.array(tbl['mjd'])
-    div = np.array(tbl['Dividends'])
-    idiv = np.where(div > 0)[0]
-    if len(idiv) > 2:
-        div_frac = div[idiv]/tbl['Close_dividends'][idiv]*365.25/np.gradient(mjd[idiv])
-        tbl['Dividend_yearly'] = 0.
-        for i in range(len(idiv)):
-            if i == 0:
-                i1=0
-            else:
-                i1 = idiv[i-1]
-            if i == len(idiv)-1:
-                i2 = len(tbl)
-                tbl['Dividend_yearly'][i1:i2] = np.nan
-            else:
-                i2 = idiv[i+1]
-                tbl['Dividend_yearly'][i1:i2] = div_frac[i]
-    else:
-        tbl['Dividend_yearly'] = 0.0
+    # If the data is outdated, fetch only the missing period
+    if delta_time > 1:
+        # Choose the period to fetch based on how old the data is
+        if delta_time < 5:
+            period = '5d'
+        elif delta_time < 30:
+            period = '1mo'
+        elif delta_time < 90:
+            period = '3mo'
+        elif delta_time < 180:
+            period = '6mo'
+        elif delta_time < 365:
+            period = '1y'
+        elif delta_time < 2*365:
+            period = '2y'
+        elif delta_time < 5*365:
+            period = '5y'
+        else:
+            period = 'max'
+        
+        # Download new data for the missing period
+        print(f'Downloading new data for {ticker} fromm Yahoo over {period}')
+        data2 = yf.Ticker(ticker).history(period=period)
+        tbl2 = Table()
+        tbl2['date'] =  Time(data2.index).iso
+        tbl2['mjd'] = Time(data2.index).mjd
+        dd = dict(data2)
+        for col in dd.keys():
+            tbl2[col] = np.array(data2[col])
+        tbl2['Close_dividends'] = np.array(data2['Close'])
+        # Only keep new rows (dates after the last in tbl)
+        keep = tbl2['mjd'] > np.max(tbl['mjd'])
+        if np.sum(keep) != 0:
+            tbl2 = tbl2[keep]
+            tbl = vstack([tbl, tbl2])
+        updated_cols = True
 
-    # Ensure Dividend_yearly is a numpy array
-    tbl['Dividend_yearly'] = np.array(tbl['Dividend_yearly'].data)
+    # If we updated columns (new data or fresh download), process the table
+    if updated_cols:
+        tbl['Close_dividends'] = np.array(tbl['Close'])
 
-    # Add columns for day of week, week number, and custom workday index
-    tbl['day of week'] = (np.array(tbl['mjd'],dtype = int)+3) % 7
-    tbl['mjd week'] = np.array((tbl['mjd']+2)//7,dtype = int)
-    tbl['work day'] =  tbl['day of week']+tbl['mjd week']*5
+        # Remove rows where close price is zero (bad data)
+        bad = tbl['Close_dividends'] == 0
+        tbl = tbl[bad == False]
 
-    # Optionally print the table
-    if verbose:
-        print(tbl)
-    # Write updated table to disk
-    tbl.write(outname, overwrite=True)
+        # Apply dividend adjustment: for each dividend, increase all subsequent close prices
+        for i in range(len(tbl)):
+            if tbl['Dividends'][i] > 0:
+                gain_frac = 1+tbl['Dividends'][i]/tbl['Close_dividends'][i]
+                tbl['Close_dividends'][i:] *= gain_frac
 
-    # Add plot_date column as numpy datetime64
+        # Compute log of adjusted close price (for log-return analysis)
+        tbl['log_close'] = np.log(tbl['Close_dividends'])
+
+        # Optionally print and write the table to disk
+        if verbose:
+            printc(f'Writing {outname}')
+
+        # Compute yearly running dividend yield
+        mjd = np.array(tbl['mjd'])
+        div = np.array(tbl['Dividends'])
+        idiv = np.where(div > 0)[0]
+        if len(idiv) > 2:
+            # Calculate annualized dividend yield for each dividend event
+            div_frac = div[idiv]/tbl['Close_dividends'][idiv]*365.25/np.gradient(mjd[idiv])
+            tbl['Dividend_yearly'] = 0.
+            for i in range(len(idiv)):
+                if i == 0:
+                    i1=0
+                else:
+                    i1 = idiv[i-1]
+                if i == len(idiv)-1:
+                    i2 = len(tbl)
+                    tbl['Dividend_yearly'][i1:i2] = np.nan
+                else:
+                    i2 = idiv[i+1]
+                    tbl['Dividend_yearly'][i1:i2] = div_frac[i]
+        else:
+            tbl['Dividend_yearly'] = 0.0
+
+        # Ensure Dividend_yearly is a numpy array (not a masked array)
+        tbl['Dividend_yearly'] = np.array(tbl['Dividend_yearly'].data)
+
+        # Add columns for day of week, week number, and custom workday index
+        tbl['day of week'] = (np.array(tbl['mjd'],dtype = int)+3) % 7  # Monday=0
+        tbl['mjd week'] = np.array((tbl['mjd']+2)//7,dtype = int)      # Week number
+        tbl['work day'] =  tbl['day of week']+tbl['mjd week']*5        # Custom workday index
+
+        # Optionally print the table for debugging
+        if verbose:
+            print(tbl)
+
+        # Add year column for convenience (as string)
+        tbl['year'] = 0
+        for i in range(len(tbl)):
+            tbl['year'][i] = Time(tbl['date'][i]).iso.split('-')[0]
+
+        # Write updated table to disk (overwrite existing file)
+        print(f'Writing {outname}')
+        tbl.write(outname, overwrite=True)
+
+    # Add plot_date column as numpy datetime64 for easy plotting
     tbl['plot_date'] = np.array(tbl['date'], dtype='datetime64')
 
-    # Remove data before year 2000 for consistency
+    # Remove data before year 2000 for consistency (optional, but keeps tables manageable)
     tbl = tbl[tbl['mjd'] > Time('2000-01-01').mjd]
-
-    # Add year column for convenience
-    tbl['year'] = 0
-    for i in range(len(tbl)):
-        tbl['year'][i] = Time(tbl['date'][i]).iso.split('-')[0]
 
     return tbl
 

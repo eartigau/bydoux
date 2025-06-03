@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Produced with astropy.io.votable version 6.1.4
+     http://www.astropy.org/ -->
+<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/VOTable-1.4.xsd">
+ <RESOURCE type="results">
+  <TABLE>
+   <FIELD ID="observationID" arraysize="128" datatype="char" name="observationID" utype="caom2:Observation.observationID">
+    <DESCRIPTION>
+     collection-specific unique observation identifier
+    </DESCRIPTION>
+   </FIELD>
+   <DATA>
+    <TABLEDATA>
+     <TR>
+      <TD>GN-2006A-Q-5-792-013</TD>
+     </TR>
+     <TR>
+      <TD>jw01181-c1001_s000027415_nirspec_f290lp-g395m</TD>
+     </TR>
+     <TR>
+      <TD>jw01212-o006_b000000111_nirspec_clear-prism</TD>
+     </TR>
+    </TABLEDATA>
+   </DATA>
+  </TABLE>
+ </RESOURCE>
+</VOTABLE>
