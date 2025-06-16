@@ -43,9 +43,6 @@ def pdollar(x):
             return f"-{s}$"
         else:
             return f"{s}$"
-        
-
-
 
 def get_bydoux_path():
     # This function returns the path to the bydoux data directory
@@ -79,7 +76,7 @@ def get_bydoux_path():
     return bydoux_path
 
 from tqdm   import tqdm
-def get_disnat_summary():
+def get_disnat_summary(verbose = False):
     # all files are in the disnat directory and are in the xlsx format
     # just copy-paste from the website and any duplicate will be handled. It's
     # ok if multiple sheets have the same transaction.
@@ -94,7 +91,8 @@ def get_disnat_summary():
 
         # check if the table is empty
         if len(table) == 0:
-            print('Empty table')
+            if verbose:
+                printc('Empty table')
             continue
 
         prix = np.array(table['Prix'],dtype = str)
@@ -129,7 +127,7 @@ def get_disnat_summary():
     dates = tbl['Date de transaction'].data
     montants = tbl['Montant de l\'opération'].data
     ifile = tbl['IFILE'].data
-    for i in tqdm(range(len(tbl)), desc='Removing duplicates'):
+    for i in tqdm(range(len(tbl)), desc='Removing duplicates', leave=verbose):
         for j in range(i+1, len(tbl)):
             cond1 = dates[i] == dates[j]
             cond2 = montants[i] == montants[j]
@@ -431,24 +429,25 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
     # Path for a token file indicating a failed download
     flag_failed_file = get_bydoux_path()+'quotes/' + ticker  + '_failed.token'
     # If a failed token exists and we're not retrying, skip this ticker
-    if not try_failed and os.path.isfile(flag_failed_file):
+    if not try_failed and os.path.isfile(flag_failed_file) and verbose:
         printc(f'Failed to read {ticker} from Yahoo')
         printc('We will not try again')
         return None
     
     # If retrying, remove the failed token so we can try again
-    if try_failed and os.path.isfile(flag_failed_file):
+    if try_failed and os.path.isfile(flag_failed_file) and verbose:
         os.remove(flag_failed_file)
         printc(f'We will try again to read {ticker} from Yahoo')
 
     # If force is set and file exists, remove it to force re-download
-    if os.path.isfile(outname) and force:
+    if os.path.isfile(outname) and force and verbose:
         printc(f'Forcing re-download of {ticker}')
         os.remove(outname)
 
     # If the FITS file already exists, read it
     if os.path.isfile(outname):
-        print(f'We have the file {outname}')
+        if verbose:
+            printc(f'We have the file {outname}, reading it')
         tbl = Table.read(outname)
 
         # Find the last modification date of the FITS file (in MJD)
@@ -463,7 +462,8 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
 
     else:
         # Otherwise, download the data from Yahoo Finance
-        print(f'We do not have the file {outname}, downloading it from Yahoo')
+        if verbose:
+            printc(f'We do not have the file {outname}, downloading it from Yahoo')
         updated_cols = True
         try:
             data = yf.Ticker(ticker).history(period='max')
@@ -471,7 +471,7 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
             data = pd.DataFrame()
 
         # If download failed and not retrying, create a failed token and return None
-        if data.empty and not try_failed:
+        if data.empty and not try_failed and verbose:
             printc(f'Failed to read {ticker} from Yahoo')
             with open(flag_failed_file, 'w') as f:
                 f.write('Failed to read from Yahoo')
@@ -488,8 +488,6 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
         delta_time = 0.0
 
 
-
-    print(delta_time)
 
     # If the data is outdated, fetch only the missing period
     if delta_time > 1:
@@ -512,7 +510,8 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
             period = 'max'
         
         # Download new data for the missing period
-        print(f'Downloading new data for {ticker} fromm Yahoo over {period}')
+        if verbose:
+            printc(f'Downloading new data for {ticker} from Yahoo over {period}')
         data2 = yf.Ticker(ticker).history(period=period)
         tbl2 = Table()
         tbl2['date'] =  Time(data2.index).iso
@@ -588,8 +587,9 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
         for i in range(len(tbl)):
             tbl['year'][i] = Time(tbl['date'][i]).iso.split('-')[0]
 
-        # Write updated table to disk (overwrite existing file)
-        print(f'Writing {outname}')
+        if verbose:
+            # Write updated table to disk (overwrite existing file)
+            print(f'Writing {outname}')
         tbl.write(outname, overwrite=True)
 
     # Add plot_date column as numpy datetime64 for easy plotting
