@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tableau avancé — DataTables + ColReorder</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="disnat-style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.6.4/css/colReorder.dataTables.min.css">
+
+  <style>
+    /* Harmoniser DataTables avec la charte disnat */
+    table.dataTable {
+      width: 100% !important;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    table.dataTable thead th {
+      font-weight: 700;
+      color: var(--muted);
+      border-bottom: 2px solid rgba(13,27,26,0.04);
+    }
+    table.dataTable tbody td {
+      border-bottom: 1px solid rgba(13,27,26,0.03);
+    }
+    table.dataTable tbody tr:hover td {
+      background: rgba(0,0,0,0.01);
+    }
+    #colCheckboxes label {
+      margin-right: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    #colCheckboxes input[type=checkbox] {
+      margin-right: 4px;
+    }
+    .filters {
+      margin-top: 5px;
+    }
+    .filters div {
+      margin-bottom: 5px;
+    }
+    .filters label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-right: 2px;
+    }
+    .filters input {
+      padding: 2px 2px;
+      border-radius: 6px;
+      border: 1px solid #e6ebe8;
+      width: 3ch;
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 2 colonnes */
+      gap: 8px 16px;
+    }
+
+
+    /* --- Grille 2x2 pour graphiques --- */
+    .charts-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* 2 colonnes */
+      grid-template-rows: auto auto;  /* 2 lignes */
+      gap: 16px;                      /* espace entre graphiques */
+      margin-top: 16px;
+    }
+    .chart-card {
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 6px;
+      padding: 8px;
+      box-sizing: border-box;
+      background: white;
+      aspect-ratio: 3/2; /* ratio largeur/hauteur */
+    }
+    .chart-card canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">T</div>
+        <h1>Tableau avancé</h1>
+      </div>
+      <nav class="nav">
+        <a href="Accueil.html ">Accueil</a>
+        <a href="documentation.html">Documentation</a>
+      </nav>
+    </header>
+
+    <div class="card">
+      <p class="small">
+        Fonctionnalités disponibles : tri en cliquant sur les en-têtes, recherche globale, pagination,
+        réordonner les colonnes par glisser-déposer (ColReorder), sauvegarde d'état (stateSave),
+        filtres numériques et cases à cocher pour masquer/afficher des colonnes, coloration rouge→vert selon les valeurs.
+      </p>
+
+      <table id="myTable" class="display nowrap table">
+        <thead>
+{{params['head']}}
+        </thead>
+        <tbody>
+{{ params['table']}}
+        </tbody>
+        <tfoot>
+{{params['head']}}
+        </tfoot>
+      </table>
+
+      <!-- Cases pour afficher/masquer les colonnes -->
+      <div id="colCheckboxes" class="controls"></div>
+
+      <!-- Filtres min/max -->
+      <div class="controls filters">
+{{ params['buttons'] }}
+      </div>
+
+      <!-- Grille des graphiques 2x2 -->
+      <div class="charts-container">
+        <div class="chart-card" id="chart1"></div>
+        <div class="chart-card" id="chart2"></div>
+        <div class="chart-card" id="chart3"></div>
+        <div class="chart-card" id="chart4"></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      © 2025 — Tableau avancé avec DataTables
+    </footer>
+  </div>
+
+  <!-- jQuery + DataTables + extensions (CDN) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/colreorder/1.6.4/js/dataTables.colReorder.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      var table = $('#myTable').DataTable({
+        responsive: true,
+        colReorder: false,
+        stateSave: true,
+        pageLength: 10,
+        lengthMenu: [5,10,25,50,100],
+        order: [[0,'asc']],
+        columnDefs: [
+          { targets: [1,4], className: 'dt-center' },
+          { targets: [0], visible: true },  
+          { targets: [3,4,5,6,7,8,9,10,11,12,13,14,15,16,17], visible: false },
+        ]
+      });
+
+      var colorFlags = {
+{{ params['asc_desc'] }}
+      };
+
+      function getColMinMax(colIdx) {
+        var data = table.column(colIdx, { search: 'applied' }).data().map(Number).toArray();
+        var min = Math.min.apply(null, data);
+        var max = Math.max.apply(null, data);
+        return {min:min, max:max};
+      }
+
+      function valueToColor(val, min, max, flag) {
+        if (isNaN(val) || max === min) return "inherit";
+        var ratio = (val - min) / (max - min);
+        if(flag === "asc") { ratio = 1 - ratio; }
+        var r = Math.round(255 * (1 - ratio));
+        var g = Math.round(180 * ratio);
+        var b = Math.round(100 * ratio);
+        return "rgb(" + r + "," + g + "," + b + ")";
+      }
+
+      table.on('draw', function(){
+        Object.keys(colorFlags).forEach(function(idx){
+          var flag = colorFlags[idx];
+          var mm = getColMinMax(idx);
+          table.column(idx, {page:'current'}).nodes().each(function(td){
+            var val = parseFloat($(td).text());
+            $(td).css("color", valueToColor(val, mm.min, mm.max, flag));
+          });
+        });
+      });
+
+      table.draw();
+
+      function buildColCheckboxes() {
+        var container = $('#colCheckboxes').empty();
+        table.columns().every(function(idx){
+          var col = this;
+          var name = $(col.header()).text();
+          if(idx === 0) {
+            container.append('<label><input type="checkbox" checked disabled/> '+name+'</label>');
+          } else {
+            var checked = col.visible() ? 'checked' : '';
+            var $cb = $('<label><input type="checkbox" data-col="'+idx+'" '+checked+'/> '+name+'</label>');
+            container.append($cb);
+          }
+        });
+      }
+      buildColCheckboxes();
+
+      $('#colCheckboxes').on('change','input[type=checkbox]', function(){
+        var idx = $(this).data('col');
+        table.column(idx).visible(this.checked);
+      });
+
+      $.fn.dataTable.ext.search.push(function(settings, data){
+{{ params['sorting'] }}
+        if (
+{{ params['masks'] }}
+        ) {
+          return true;
+        }
+        return false;
+      });
+
+      $({{ params['mask2'] }}).on('keyup change', function(){
+        table.draw();
+      });
+    });
+  </script>
+</body>
+</html>

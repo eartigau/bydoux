@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tableau triable</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+      cursor: pointer;
+    }
+    th:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<table id="myTable">
+  <thead>
+    <tr>
+      <th onclick="sortTable(0)">Nom</th>
+      <th onclick="sortTable(1)">Âge</th>
+      <th onclick="sortTable(2)">Ville</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Paul</td><td>25</td><td>Montréal</td></tr>
+    <tr><td>Sophie</td><td>30</td><td>Paris</td></tr>
+    <tr><td>Alex</td><td>22</td><td>Londres</td></tr>
+    <tr><td>Marie</td><td>28</td><td>Québec</td></tr>
+  </tbody>
+</table>
+
+<script>
+function sortTable(n) {
+  let table = document.getElementById("myTable");
+  let rows = Array.from(table.rows).slice(1); // ignorer l'entête
+  let switching = true;
+  let dir = "asc"; 
+  let switchcount = 0;
+
+  while (switching) {
+    switching = false;
+    for (let i = 0; i < rows.length - 1; i++) {
+      let x = rows[i].getElementsByTagName("TD")[n];
+      let y = rows[i + 1].getElementsByTagName("TD")[n];
+      let shouldSwitch = false;
+
+      let xContent = isNaN(x.innerHTML) ? x.innerHTML.toLowerCase() : Number(x.innerHTML);
+      let yContent = isNaN(y.innerHTML) ? y.innerHTML.toLowerCase() : Number(y.innerHTML);
+
+      if (dir === "asc" && xContent > yContent) {
+        shouldSwitch = true;
+      } else if (dir === "desc" && xContent < yContent) {
+        shouldSwitch = true;
+      }
+
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        switchcount++;
+        break;
+      }
+    }
+    if (switchcount === 0 && dir === "asc") {
+      dir = "desc";
+      switching = true;
+    }
+  }
+}
+</script>
+
+</body>
+</html>
+

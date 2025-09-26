@@ -1,0 +1,65 @@
+nom: "Étienne"
+date_de_naissance: "1976-06-22"
+age_retraite: 62
+age_mort: 100
+
+salaire: 107000
+augmentations: 0.020
+
+inflation:
+  taux: 0.02
+  variations: 0.01
+
+rrq:
+  montant: 16775
+  taux_augmentation: 0.02
+
+securite_vieillesse:
+  montant: 12110
+
+fonds_pension:
+  55: 23130 
+  60: 41890
+  65: 51700
+
+
+placements:
+  disnat_cad_reer: 
+    montant: 50000
+    cotisation_annuelle: 0
+    rendement: 0.12
+    variations: 0.06
+    type: 'REER'
+    description: "REER disnat"
+  fonds_ftq:
+    montant: 20000
+    cotisation_annuelle: 3500
+    rendement: 0.07
+    variations: 0.03
+    type: 'REER'
+    description: "Fonds FTQ"
+  disnat_cad_celi:
+    montant: 85000
+    cotisation_annuelle: 7000
+    rendement: 0.12
+    variations: 0.05
+    type: 'CELI'
+    description: "Disnat CELI"
+  disnat_usd:
+    montant: 33000
+    cotisation_annuelle: 0
+    rendement: 0.12
+    variations: 0.04
+    type: 'CELI'
+    description: "Disnat CELI USD"
+  placement_non_enregistre:
+      montant: 0
+      cotisation_annuelle: 0
+      rendement: 0.10
+      variations: 0.03
+      description: "demo"
+      type: 'Non enregistré'
+      ajout_ponctuel:
+        annee: 2036
+        montant: 300000
+        description: "Ajout ponctuel en 2036"

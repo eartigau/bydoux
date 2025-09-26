@@ -2,9 +2,25 @@ import bydoux_tools as bt
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+from astropy.table import Table
 
 # List of tickers to analyze
-tickers = ['ZWG.TO','HURA.TO','ZLU.TO','EBNK.TO','ZWE.TO','DRFC.TO','ZID.TO','ZSP.TO','ZGQ.TO','^SPX']
+etf_table = 'summary_ETF.csv'
+
+# List of BMO ETF tickers (with some non-ETF entries, but filtered later)
+
+tbl = Table.read(etf_table,format='ascii.tab')
+
+bad = np.zeros(len(tbl), dtype=bool)
+# check if these is a 'FAIL' in the comment column
+for i, comment in enumerate(tbl['comment']):
+    if 'FAIL' in comment.upper():
+        bad[i] = True
+tbl = tbl[~bad]    
+
+
+tickers = tbl['Ticker'].data
+
 # sort tickers alphabetically
 tickers.sort()
 

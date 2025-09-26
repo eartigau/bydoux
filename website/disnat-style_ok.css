@@ -1,0 +1,335 @@
+/* disnat-style.css
+   Style inspiré de disnat.com (Desjardins Courtage) — couleurs, boutons, cartes, tableau, nav.
+   Usage: <link rel="stylesheet" href="disnat-style.css"> 
+*/
+
+/* --- Variables (faciles à ajuster) --- */
+:root{
+  --green-600: #007a33;    /* couleur primaire Desjardins-like */
+  --green-500: #00a859;    /* accent */
+  --green-300: #bdeacc;    /* très clair pour fonds */
+  --dark-900: #0d1b1a;     /* texte principal sombre */
+  --muted: #556065;        /* texte secondaire */
+  --bg: #ffffff;
+  --card-bg: #fbfcfb;
+  --accent: var(--green-500);
+  --radius: 10px;
+  --shadow-sm: 0 1px 3px rgba(13,27,26,0.06);
+  --shadow-md: 0 6px 18px rgba(13,27,26,0.08);
+  --max-width: 1200px;
+  --ui-spacing: 12px;
+  font: 16px/1.45 "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* --- Global --- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdfb 100%);
+  color:var(--dark-900);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding:20px;
+  font-family:inherit;
+}
+
+/* --- Container --- */
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding: 12px;
+}
+
+/* --- Header / Navbar --- */
+.header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+.brand{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.brand .logo{
+  width:44px;
+  height:44px;
+  background:var(--green-600);
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:700;
+  box-shadow:var(--shadow-sm);
+  flex:0 0 44px;
+}
+.brand h1{font-size:1.05rem;margin:0;color:var(--dark-900);font-weight:600}
+.nav{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.nav a{
+  color:var(--muted);
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:8px;
+  font-size:0.95rem;
+}
+.nav a:hover{background:rgba(0,122,51,0.06);color:var(--dark-900)}
+
+/* --- Primary button --- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:12px;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--dark-900);
+  cursor:pointer;
+  font-weight:600;
+  transition:all .14s ease;
+}
+.btn:focus{outline:3px solid rgba(0,168,89,0.14)}
+.btn-primary{
+  background:var(--accent);
+  color:white;
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(0,0,0,0.04);
+}
+.btn-primary:hover{transform:translateY(-1px); box-shadow:var(--shadow-md)}
+.btn-ghost{
+  background:transparent;
+  border:1px solid rgba(0,0,0,0.06);
+}
+
+/* --- Hero / Ticker area --- */
+.hero{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+.ticker{
+  background:linear-gradient(90deg, rgba(0,168,89,0.06), rgba(0,168,89,0.02));
+  padding:8px 12px;
+  border-radius:10px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  box-shadow:var(--shadow-sm);
+}
+.ticker .symbol{font-weight:700;color:var(--green-600)}
+.ticker .value{font-size:1.05rem;font-weight:700}
+.ticker small{color:var(--muted)}
+
+/* --- Controls (selects, checkboxes) --- */
+.controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin:12px 0;
+}
+.controls label{font-size:0.9rem;color:var(--muted)}
+select, input[type="text"], input[type="number"]{
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #e6ebe8;
+  min-width:140px;
+  background:white;
+  font-size:0.95rem;
+}
+select:focus, input:focus{box-shadow:0 4px 12px rgba(0,0,0,0.04);outline:none;border-color:rgba(0,122,51,0.12)}
+
+/* --- Card --- */
+.card{
+  background:var(--card-bg);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow-sm);
+  border:1px solid rgba(13,27,26,0.04);
+}
+.card h3{margin:0 0 8px 0;font-size:1rem;color:var(--dark-900)}
+
+/* --- Grid for layout --- */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap:16px;
+}
+@media (max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* --- Plot container (fits Plotly) --- */
+.plot-wrapper{
+  min-height:420px;
+  padding:8px;
+  border-radius:10px;
+  background:linear-gradient(180deg,#fff,#fbfdfb);
+  border:1px solid rgba(13,27,26,0.03);
+}
+
+/* --- Table styles (e.g., market tables) --- */
+.table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.95rem;
+}
+.table thead th{
+  text-align:left;
+  font-weight:700;
+  padding:8px 10px;
+  border-bottom:2px solid rgba(13,27,26,0.04);
+  color:var(--muted);
+}
+.table tbody td{
+  padding:8px 10px;
+  border-bottom:1px solid rgba(13,27,26,0.03);
+}
+.table tbody tr:hover td{background: rgba(0,0,0,0.01)}
+
+/* numeric badges */
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:0.85rem;
+  background:var(--green-300);
+  color:var(--green-600);
+  font-weight:700;
+}
+
+/* --- Small utilities --- */
+.small{font-size:0.85rem;color:var(--muted)}
+.kicker{font-size:0.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+
+/* --- Footer --- */
+.footer{
+  margin-top:28px;
+  padding-top:12px;
+  border-top:1px solid rgba(13,27,26,0.03);
+  color:var(--muted);
+  font-size:0.88rem;
+}
+
+/* --- Accessibility / focus styles --- */
+a:focus, button:focus, select:focus { outline: none; box-shadow:0 0 0 3px rgba(0,168,89,0.10); border-radius:8px; }
+
+/* --- Tiny form of "pill" for date annotations (for plot labels) --- */
+.pill{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  background:rgba(0,122,51,0.08);
+  color:var(--green-600);
+  font-weight:600;
+  font-size:0.85rem;
+}
+
+/* --- Print friendliness --- */
+@media print{
+  .nav, .btn, .ticker { display:none }
+  body{background:white;color:black}
+}
+
+
+.plot-box {
+  width: 100%;
+  aspect-ratio: 3 / 2;  /* carré : hauteur = largeur */
+  margin-bottom:20px;
+  padding:10px;
+  border:1px solid rgba(13,27,26,0.1);
+  border-radius:8px;
+  background: var(--background-alt, #f9f9f9);
+}
+
+/* --- Grille responsive pour graphiques --- */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 colonnes si espace suffisant */
+  gap: 16px;                      /* espace entre graphiques */
+  margin-top: 16px;
+}
+
+.chart-card {
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 8px;
+  box-sizing: border-box;
+  background: white;
+  height: 0;
+  padding-bottom: 66.66%; /* ratio 3:2 responsive */
+  position: relative;
+}
+
+.chart-card canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.plots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* exactement 2 colonnes */
+  gap: 16px;
+  margin: 16px 0;
+}
+/* masquer si vide */
+.plot-box:empty {
+  display: none;
+}
+.plot-box:empty,
+.chart-card:empty,
+.plots:empty {
+  display: none;       /* déjà présent */
+  margin: 0;           /* enlever l'espace vertical */
+  padding: 0;          /* enlever le padding */
+  height: 0;           /* annuler la hauteur */
+}
+
+@media (max-width: 700px) {
+  .plots {
+    grid-template-columns: 1fr; /* une seule colonne sur petit écran */
+  }
+}
+
+/* Boîtes min/max dans les filtres */
+.filters .filter-item {
+  display: flex;
+  justify-content: flex-end; /* pousser le contenu vers la droite */
+  gap: 4px;
+}
+
+.filters .filter-item label {
+  margin-right: auto;  /* le label reste à gauche */
+}
+
+.filter-item input[type="number"] {
+  width: 5ch;         /* largeur compacte : environ 5 caractères */
+  min-width: 50px;    /* empêche de devenir trop petit */
+  text-align: right;  /* aligne les nombres à droite */
+  padding: 2px 4px;   /* réduit l’espace intérieur */
+  font-size: 0.9em;   /* un peu plus petit que le texte normal */
+}
+
+/* Supprimer les flèches dans Chrome, Edge, Safari */
+.filter-item input[type="number"]::-webkit-outer-spin-button,
+.filter-item input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Supprimer les flèches dans Firefox */
+.filter-item input[type="number"] {
+  -moz-appearance: textfield;
+}

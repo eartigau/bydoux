@@ -12,6 +12,7 @@ import wget
 
 import datetime
 import pickle
+from tqdm   import tqdm
 
 from currency_converter import CurrencyConverter
 from datetime import date
@@ -21,10 +22,141 @@ from scipy.interpolate import UnivariateSpline as ius
 import pandas as pd
 
 import matplotlib.pyplot as plt
-
+from astropy.table import Table
 import glob
 
-def pdollar(x):
+
+
+def compare_spx(ticker, tbl = None):
+    if tbl is None:
+        tbl = read_quotes(ticker)
+    tbl_spx = read_quotes('^SPX')
+
+    mjd_spx = tbl_spx['mjd']
+    log_close_spx = tbl_spx['log_close']
+
+    mjd = tbl['mjd']
+    log_close = tbl['log_close']
+
+    jd1 = mjd[0]
+    jd2 = mjd[-1]
+
+    g = (mjd_spx>=jd1) & (mjd_spx<=jd2)
+
+    slope_spx = np.polyfit(mjd_spx[g]/365.24, log_close_spx[g], 1)[0]
+    sig_spx = np.std(log_close_spx[g] - (slope_spx * mjd_spx[g]/365.24))
+
+    slope = np.polyfit(mjd/365.24, log_close , 1)[0]
+    sig = np.std(log_close - (slope * mjd/365.24))
+
+    dict_spx = {
+        'diff_slope': slope - slope_spx,
+        'diff_ratio': sig / sig_spx,
+        'ticker_slope': slope,
+        'ticker_stdv': sig,
+        'spx_slope': slope_spx,
+        'spx_sigma': sig_spx,
+        'overlap_years': (jd2-jd1)/365.24
+    }
+
+    return dict_spx
+
+def top_holdings(ticker):
+    t = yf.Ticker(ticker)
+    fd = t.funds_data
+    tbl = Table.from_pandas(fd.top_holdings, index=True)
+
+    return tbl
+
+def gini(v):
+    # Compute the Gini coefficient of a vector v
+    # Gini is a measure of inequality, 0 = perfect equality, 1 = perfect inequality
+    v = np.array(v)
+    if np.sum(v) == 0:
+        return np.nan
+    v = v[v > 0]
+    n = len(v)
+    if n == 0:
+        return np.nan
+    v = np.sort(v)
+    index = np.arange(1, n + 1)
+    gini_coeff = 1-((2 * np.sum(index * v)) / (n * np.sum(v)) - (n + 1) / n)
+    return gini_coeff
+
+def sectors(ticker):
+    sectors = "realestate","consumer_cyclical","basic_materials","consumer_defensive","technology","communication_services","financial_services","utilities","industrials","energy","healthcare"
+    tbl0 = dict()
+    tbl0['sector'] = sectors
+    tbl0['frac'] = np.zeros(len(sectors))
+
+    tbl0['gini'] = -1
+
+    try:
+        wsectors = yf.Ticker(ticker).funds_data.sector_weightings
+    except:
+        return tbl0
+
+    wsectors = dict(wsectors.items())
+
+    frac = []
+    vkey = []
+    for key in wsectors:
+        frac.append(wsectors[key])
+        vkey.append(key)
+    frac  = np.array(frac)
+    vkey  = np.array(vkey)
+
+    tbl = dict(sector = vkey, frac = frac)
+
+    if len(tbl) == 0:
+        return tbl0
+
+    tbl['gini'] = gini(frac)
+
+    return tbl
+
+
+def bmo_etf():
+    # List of BMO ETF tickers (with some non-ETF entries, but filtered later)
+    tickers = [
+        'ZGI', 'ZCN', 'STPL', 'ZIU', 'COMM', 'ZDM', 'DISC', 'ZEA', 'ZEO', 'ZEM',
+        'ZGD', 'ZUE', 'ZJG', 'ZSP', 'ZEAT', 'ZSP.U', 'ZMT', 'ZDJ', 'ZQQ', 'ESGA',
+        'ZNQ', 'ESGY', 'ZNQ.U', 'ESGE', 'ZMID.F', 'ESGG', 'ZMID', 'ZGRN', 'ZMID.U', 'ZCLN',
+        'ZSML.F', 'ESGB', 'ZSML', 'ESGF', 'ZSML.U', 'ZJPN', 'ZJPN.F', 'ZCS', 'ZID', 'ZCS.L',
+        'ZCH', 'ZCM', 'ZLC', 'ZLB', 'ZPS', 'ZLH', 'ZPS.L', 'ZLU', 'ZFS', 'ZLU.U',
+        'ZFS.L', 'ZLD', 'ZMP', 'ZLI', 'ZPL', 'ZLE', 'ZFM', 'ZUQ.F', 'ZFL', 'ZUQ',
+        'ZUQ.U', 'ZAG', 'ZGQ', 'ZSB', 'ZEQ', 'ZCB', 'ZDV', 'ZDB', 'ZUD', 'ZSDB',
+        'ZDY', 'ZCDB', 'ZDY.U', 'ZMMK', 'ZDH', 'ZST', 'ZDI', 'ZST.L', 'ZVC', 'ZMBS',
+        'ZVU', 'ZGB', 'ZRR', 'ZOCT', 'ZBI', 'ZJUL', 'ZBBB', 'ZAPR', 'ZQB', 'ZJAN',
+        'ZUAG', 'ZWC', 'ZUAG.F', 'ZWS', 'ZUAG.U', 'ZWH', 'ZSU', 'ZWH.U', 'ZMU', 'ZWA',
+        'ZIC', 'ZWE', 'ZIC.U', 'ZWP', 'ZUCM', 'ZWG', 'ZUCM.U', 'ZWB', 'ZUS.U', 'ZWB.U',
+        'ZUS.V', 'ZWK', 'ZTS', 'ZWU', 'ZTS.U', 'ZWHC', 'ZTM', 'ZWEN', 'ZTM.U', 'ZWT',
+        'ZTL.F', 'ZWQT', 'ZTL', 'ZPAY.F', 'ZTL.U', 'ZPAY', 'ZTIP', 'ZPAY.U', 'ZTIP.U', 'ZPH',
+        'ZTIP.F', 'ZPW', 'ZJK', 'ZPW.U', 'ZHY', 'ZJK.U', 'ZEB', 'ZFH', 'ZUT', 'ZEF',
+        'ZRE', 'ZIN', 'ZPR', 'ZUB', 'ZPR.U', 'ZBK', 'ZHP', 'ZUH', 'ZUP', 'ZHU',
+        'ZUP.U', 'PAGE', 'Ticker', 'Date', 'ASSET', 'ZCON', 'ZBAL', 'ZGRO', 'ZEQT', 'ZESG',
+        'ZBAL.T', 'ZGRO.T', 'ZMI', 'ACTIVE', 'ZLSC', 'ZLSU', 'ZZZD', 'ZACE', 'ARKK', 'ARKG',
+        'ARKW', 'BGEQ', 'BGHC', 'BGIF', 'BGIN', 'BGDV', 'BGRT', 'GRNI', 'TOWR', 'WOMN',
+        'ZGSB', 'ZMSB', 'ZCPB', 'ZFC', 'ZFN', 'ZXLE', 'ZXLU', 'ZXLK', 'ZXLB', 'ZXLP',
+        'ZXLY', 'ZXLI', 'ZXLC', 'ZXLV', 'ZXLF', 'ZXLR', 'ZXLE.F', 'ZXLU.F', 'ZXLK.F', 'ZXLB.F',
+        'ZXLP.F', 'ZXLY.F', 'ZXLI.F', 'ZXLC.F', 'ZXLV.F', 'ZXLF.F', 'ZXLR.F'
+    ]
+    # Add .TO suffix for Yahoo Finance Canada tickers
+    tickers = np.array([ticker + '.TO' for ticker in tickers])
+
+    return tickers
+
+def desjardins_etf():
+    tickers = ['DCU.TO', 'DCS.TO', 'DCG.TO', 'DCC.TO', 'DCP.TO', 'DCBC.TO',
+               'DMEC.TO', 'DMEU.TO', 'DMEI.TO', 'DMEE.TO','DRCU.TO', 'DRMC.TO', 'DRMU.TO',
+                'DRMD.TO', 'DRME.TO', 'DRFC.TO', 'DRFU.TO', 'DRFD.TO', 'DRFE.TO',
+                'DSAE.TO', 'DCBC.TO', 'DCU.TO', 'DCS.TO', 'DCG.TO', 'DCC.TO', 'DCP.TO',
+                'DANC.TO', 'DAMG.TO']
+
+    tickers = np.unique(np.array(tickers))
+    return tickers
+
+def pdollar(x0):
     """
     Convert a number to a string with a dollar sign and two decimal places.
     :param x: the number to convert
@@ -33,11 +165,11 @@ def pdollar(x):
     1.0 -> '1,00$' and 1000.0 -> '1 000,00$'
     Put the $ at the end with the French format.
     """
-    if np.isnan(x):
+    if np.isnan(x0):
         return '---'
     else:
         # Convert to float and format with two decimal places, using space as thousands separator and comma as decimal
-        x = float(x)
+        x = float(x0)
         s = f"{abs(x):,.2f}".replace(",", "X").replace(".", ",").replace("X", " ")
         if x < 0:
             return f"-{s}$"
@@ -75,7 +207,7 @@ def get_bydoux_path():
 
     return bydoux_path
 
-from tqdm   import tqdm
+
 def get_disnat_summary(verbose = False):
     # all files are in the disnat directory and are in the xlsx format
     # just copy-paste from the website and any duplicate will be handled. It's
@@ -198,7 +330,6 @@ def summary(ticker):
     # Display the plots
     plt.show()
 
-
 def today():
     # Returns today's date as a string in YYYYMMDD format (no dashes)
     return datetime.date.today().isoformat().replace('-','')
@@ -210,7 +341,6 @@ def get_recommentations():
         info = yf.Ticker(ticker).info
         if 'recommendationKey' in info:
             print(ticker,info['recommendationKey'])
-
 
 def xchange_range(mjd):
     # Interpolate the CAD to USD exchange rate for a range of MJDs
@@ -237,7 +367,6 @@ def xchange_range(mjd):
 
     return rates
 
-
 def write_pickle(tbl, filename):
     # Write a Python object to a pickle file
     with open(filename, 'wb') as f:
@@ -259,9 +388,10 @@ def get_snp500():
     link = (
         "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies#S&P_500_component_stocks"
     )
-    # Read the first table from the page
-    df = pd.read_html(link, header=0)[0]
+    # Add headers so Wikipedia doesn't block
+    headers = {"User-Agent": "Mozilla/5.0"}
 
+    df = pd.read_html(link, header=0, storage_options=headers)[0]
     # Extract the 'Symbol' column as a numpy array
     ticker = np.array([ticker for ticker in df['Symbol']])
 
@@ -337,24 +467,66 @@ def read_google_sheet_csv(sheet_id: str, gid: str) -> Table:
 
     return tbl
 
-def get_info(key):
+def file_age(file):
+    """
+    Returns the age of a file in days.
+
+    Args:
+        file (str): The path to the file.
+
+    Returns:
+        float: The age of the file in days.
+    """
+    if os.path.exists(file):
+        # Get the last modification time of the file (in seconds since epoch)
+        last =  Time(os.path.getmtime(file),format='unix').mjd
+        # Calculate the age in days
+        delta_time = Time.now().mjd - last
+    else:
+        delta_time = np.inf
+
+    return delta_time
+
+def get_info(key, refresh_delay = 30):
     """
     Retrieves and caches Yahoo Finance info for a given ticker.
 
     Args:
         key (str): The ticker symbol.
 
+        refresh_delay (int): Days before refreshing cached info.
+
     Returns:
         dict: The info dictionary from Yahoo Finance.
     """
-    outname = '/quotes/' + key + '_info_' + today() + '_info.pkl'
+
+    
+    outname = get_bydoux_path()+'/quotes/' + key + '_info.pkl'
 
     # If info already cached, read from pickle, else fetch and cache
     if os.path.exists(outname):
-        info = read_pickle(outname)
-    else:
-        info = yf.Ticker(key).info
-        write_pickle(info, outname)
+        age = file_age(outname)
+        if age < refresh_delay:
+            info = read_pickle(outname)
+            return info
+        else:
+            # remove old file
+            os.remove(outname)
+           
+    info = yf.Ticker(key).info
+    # make a dictionnary from the info
+    info = dict(info.items())
+
+    info['sectors'] = sectors(key)
+    tbl = read_quotes(key)
+    info['compare_sp500'] = compare_spx(key, tbl = tbl)
+
+    info['events'] = compute_events(key,tbl = tbl)
+    info['mjd0'] = tbl['mjd'][0]
+    info['mjd1'] = tbl['mjd'][-1]
+    info['duration_years'] = np.round((info['mjd1'] - info['mjd0'])/365.24,2)
+
+    write_pickle(info, outname)
 
     # Optionally add 'currency' key if missing but 'financialCurrency' exists
     if 'currency' not in info.keys() and 'financialCurrency' in info.keys():
@@ -391,7 +563,7 @@ def get_sp500_history():
         all_sp500 = read_pickle(all_sp500_name)
     else:
         printc('Downloading the S&P500 history')
-        data = yf.download('^GSPC', period='max')
+        data = yf.download('^SPX', period='max')
         tbl = Table()
         # Store date and MJD
         tbl['date'] =  Time(data.index).iso
@@ -429,19 +601,22 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
     # Path for a token file indicating a failed download
     flag_failed_file = get_bydoux_path()+'quotes/' + ticker  + '_failed.token'
     # If a failed token exists and we're not retrying, skip this ticker
-    if not try_failed and os.path.isfile(flag_failed_file) and verbose:
-        printc(f'Failed to read {ticker} from Yahoo')
-        printc('We will not try again')
+    if not try_failed and os.path.isfile(flag_failed_file):
+        if verbose:
+            printc(f'Failed to read {ticker} from Yahoo')
+            printc('We will not try again')
         return None
     
     # If retrying, remove the failed token so we can try again
     if try_failed and os.path.isfile(flag_failed_file) and verbose:
         os.remove(flag_failed_file)
-        printc(f'We will try again to read {ticker} from Yahoo')
+        if verbose:
+            printc(f'We will try again to read {ticker} from Yahoo')
 
     # If force is set and file exists, remove it to force re-download
-    if os.path.isfile(outname) and force and verbose:
-        printc(f'Forcing re-download of {ticker}')
+    if os.path.isfile(outname) and force:
+        if verbose:
+            printc(f'Forcing re-download of {ticker}')
         os.remove(outname)
 
     # If the FITS file already exists, read it
@@ -454,12 +629,6 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
         last =  Time(os.path.getctime(outname),format='unix').mjd
         delta_time = Time.now().mjd - last
 
-        # Adjust delta_time if today is Saturday or Sunday (markets closed)
-        if  np.floor(Time.now().mjd % 7) == 3:  # Saturday
-            delta_time -=1
-        if  np.floor(Time.now().mjd % 7) == 4:  # Sunday
-            delta_time -=2
-
     else:
         # Otherwise, download the data from Yahoo Finance
         if verbose:
@@ -471,21 +640,29 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
             data = pd.DataFrame()
 
         # If download failed and not retrying, create a failed token and return None
-        if data.empty and not try_failed and verbose:
-            printc(f'Failed to read {ticker} from Yahoo')
+        if data.empty and not try_failed:
+            if verbose:
+                printc(f'Failed to read {ticker} from Yahoo')
             with open(flag_failed_file, 'w') as f:
                 f.write('Failed to read from Yahoo')
             return None
 
         # Create an Astropy Table from the downloaded data
         tbl = Table()
-        tbl['date'] =  Time(data.index).iso
-        tbl['mjd'] = Time(data.index).mjd
-        dd = dict(data)
-        for col in dd.keys():
-            tbl[col] = np.array(data[col])
-        tbl['Close_dividends'] = np.array(data['Close'])
-        delta_time = 0.0
+        try:
+            tbl['date'] =  Time(data.index).iso
+            tbl['mjd'] = Time(data.index).mjd
+            dd = dict(data)
+            for col in dd.keys():
+                tbl[col] = np.array(data[col])
+            tbl['Close_dividends'] = np.array(data['Close'])
+            delta_time = 0.0
+        except:
+            if verbose:
+                printc(f'Failed to read {ticker} from Yahoo')
+            with open(flag_failed_file, 'w') as f:
+                f.write('Failed to read from Yahoo')
+            return None
 
 
 
@@ -514,8 +691,18 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
             printc(f'Downloading new data for {ticker} from Yahoo over {period}')
         data2 = yf.Ticker(ticker).history(period=period)
         tbl2 = Table()
-        tbl2['date'] =  Time(data2.index).iso
-        tbl2['mjd'] = Time(data2.index).mjd
+
+        try:
+            tbl2['date'] =  Time(data2.index).iso
+            tbl2['mjd'] = Time(data2.index).mjd.astype(int)
+        except:
+            if verbose:
+                printc(f'Failed to read {ticker} from Yahoo')
+            with open(flag_failed_file, 'w') as f:
+                f.write('Failed to read from Yahoo')
+            return None
+
+
         dd = dict(data2)
         for col in dd.keys():
             tbl2[col] = np.array(data2[col])
@@ -597,6 +784,32 @@ def read_quotes(ticker, force = False, verbose = False, try_failed = False):
 
     # Remove data before year 2000 for consistency (optional, but keeps tables manageable)
     tbl = tbl[tbl['mjd'] > Time('2000-01-01').mjd]
+
+
+    info = yf.Ticker(ticker).info
+    # if longName not in info, we have a problem and return an empty table
+    if 'longName' not in info:
+        printc(f'Problem with {ticker}, no longName in info')
+        return Table()
+
+    typeDisp = info['typeDisp'] if 'typeDisp' in info else 'Other'
+
+    type_table_compile = os.path.expanduser("~")+f'/bydoux/summary_{typeDisp}.csv'
+    if os.path.exists(type_table_compile):
+        tbl_compile = Table.read(type_table_compile, format='ascii.tab')
+        if ticker not in tbl_compile['Ticker']:
+            new_row = {'Ticker': ticker, 'longName': info['longName'],'comment': '--None--'}
+            tbl_compile.add_row(new_row)
+            tbl_compile.write(type_table_compile, format='ascii.tab', overwrite=True)
+            printc(f'Added {ticker} to {type_table_compile}')
+    else:
+        tbl_compile = Table()
+        tbl_compile['Ticker'] = [ticker]
+        tbl_compile['longName'] = [info['longName']]
+        tbl_compile['comment'] = ['--None--']
+        tbl_compile.write(type_table_compile, format='ascii.tab', overwrite=True)
+        printc(f'Created {type_table_compile} with {ticker}')
+
 
     return tbl
 
@@ -688,23 +901,29 @@ def batch_quotes(sample, full = False, force = False):
 
     return all_sp500
 
-def get_info(ticker):
-    """
-    Retrieves and caches Yahoo Finance info for a given ticker (wrapper).
 
-    Args:
-        ticker (str): The ticker symbol.
+def compute_events(ticker, tbl = None):
+    if tbl is None:
+        tbl = read_quotes(ticker)
+    path = get_bydoux_path()
+    event_table = Table.read(f'{path}/events.csv', format='csv', delimiter='&')
 
-    Returns:
-        dict: The info dictionary from Yahoo Finance.
-    """
-    pkl_name = get_bydoux_path()+'/quotes/' + ticker + '_info_' + today() + '.pkl'
 
-    # Use cached info if available, else fetch and cache
-    if os.path.exists(pkl_name):
-        info = read_pickle(pkl_name)
-    else:  
-        info = yf.Ticker(ticker).info
-        write_pickle(info, pkl_name)
-    
-    return info
+    dict_event = {}
+    for j in range(len(event_table)):
+            
+        mjd1 = Time(event_table['event_start'][j]).mjd
+        mjd2 = Time(event_table['event_end'][j]).mjd
+        mjd3 = Time(event_table['baseline_start'][j]).mjd
+        mjd4 = Time(event_table['baseline_end'][j]).mjd
+
+        # make a bolean mask between mjd1 and mjd2
+        mask12 = (tbl['mjd'] >= mjd1) & (tbl['mjd'] <= mjd2)
+        mask34 = (tbl['mjd'] >= mjd3) & (tbl['mjd'] <= mjd4)
+
+        log_close12 = np.mean(tbl['log_close'][mask12])
+        log_close34 = np.mean(tbl['log_close'][mask34])
+        dict_event[event_table['Event'][j]] = log_close12 - log_close34
+
+
+    return dict_event

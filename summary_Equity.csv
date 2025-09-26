@@ -1,0 +1,958 @@
+Ticker	longName	comment
+AXON	Axon Enterprise, Inc.	--None--
+BNS.TO	The Bank of Nova Scotia	--None--
+CHRW	C.H. Robinson Worldwide, Inc.	--None--
+FFH.TO	Fairfax Financial Holdings Limited	--None--
+FICO	Fair Isaac Corporation	--None--
+FTNT	Fortinet, Inc.	--None--
+GEV	GE Vernova Inc.	--None--
+IRM	Iron Mountain Incorporated	--None--
+PLTR	Palantir Technologies Inc.	--None--
+TRGP	Targa Resources Corp.	--None--
+TSLA.TO	Tesla, Inc.	--None--
+UAL	United Airlines Holdings, Inc.	--None--
+VST	Vistra Corp.	--None--
+VTR	Ventas, Inc.	--None--
+YRB.TO	Yorbeau Resources Inc.	--None--
+YGR.TO	Yangarra Resources Ltd.	--None--
+YCM.TO	New Commerce Split Fund	--None--
+Y.TO	Yellow Pages Limited	--None--
+XTG.TO	Xtra-Gold Resources Corp.	--None--
+XTD.TO	TDb Split Corp.	--None--
+XTC.TO	Exco Technologies Limited	--None--
+XAU.TO	Goldmoney Inc.	--None--
+X.TO	TMX Group Limited	--None--
+WTE.TO	Westshore Terminals Investment Corporation	--None--
+WSP.TO	WSP Global Inc.	--None--
+WRX.TO	Western Resources Corp.	--None--
+WRN.TO	Western Copper and Gold Corporation	--None--
+WRG.TO	Western Energy Services Corp.	--None--
+WPRT.TO	Westport Fuel Systems Inc.	--None--
+WPM.TO	Wheaton Precious Metals Corp.	--None--
+WPK.TO	Winpak Ltd.	--None--
+WN.TO	George Weston Limited	--None--
+WM.TO	Wallbridge Mining Company Limited	--None--
+WJX.TO	Wajax Corporation	--None--
+WILD.TO	WildBrain Ltd.	--None--
+WFC.TO	Wall Financial Corporation	--None--
+WELL.TO	WELL Health Technologies Corp.	--None--
+WEF.TO	Western Forest Products Inc.	--None--
+WEED.TO	Canopy Growth Corporation	--None--
+WDO.TO	Wesdome Gold Mines Ltd.	--None--
+WCP.TO	Whitecap Resources Inc.	--None--
+WCN.TO	Waste Connections, Inc.	--None--
+VLN.TO	Velan Inc.	--None--
+VLE.TO	Valeura Energy Inc.	--None--
+VGZ.TO	Vista Gold Corp.	--None--
+VET.TO	Vermilion Energy Inc.	--None--
+VCM.TO	Vecima Networks Inc.	--None--
+USA.TO	Americas Gold and Silver Corporation	--None--
+URE.TO	Ur-Energy Inc.	--None--
+URB.TO	Urbana Corporation	--None--
+UNI.TO	Unisync Corp.	--None--
+UNC.TO	United Corporations Limited	--None--
+TXP.TO	Touchstone Exploration Inc.	--None--
+TXG.TO	Torex Gold Resources Inc.	--None--
+TWM.TO	Tidewater Midstream and Infrastructure Ltd.	--None--
+TWC.TO	TWC Enterprises Limited	--None--
+TVK.TO	TerraVest Industries Inc.	--None--
+TVE.TO	Tamarack Valley Energy Ltd.	--None--
+TSU.TO	Trisura Group Ltd.	--None--
+TSL.TO	Tree Island Steel Ltd.	--None--
+TRZ.TO	Transat A.T. Inc.	--None--
+TRP.TO	TC Energy Corporation	--None--
+TRI.TO	Thomson Reuters Corporation	--None--
+TOY.TO	Spin Master Corp.	--None--
+TOU.TO	Tourmaline Oil Corp.	--None--
+TOT.TO	Total Energy Services Inc.	--None--
+TMQ.TO	Trilogy Metals Inc.	--None--
+TLO.TO	Talon Metals Corp.	--None--
+TLG.TO	Troilus Gold Corp.	--None--
+TKO.TO	Taseko Mines Limited	--None--
+TIH.TO	Toromont Industries Ltd.	--None--
+TI.TO	Titan Mining Corporation	--None--
+TH.TO	Theratechnologies Inc.	--None--
+TGO.TO	TeraGo Inc.	--None--
+TFII.TO	TFI International Inc.	--None--
+TF.TO	Timbercreek Financial Corp.	--None--
+TD.TO	The Toronto-Dominion Bank	--None--
+TCW.TO	Trican Well Service Ltd.	--None--
+TCS.TO	Tecsys Inc.	--None--
+TC.TO	Tucows Inc.	--None--
+TBL.TO	Taiga Building Products Ltd.	--None--
+TA.TO	TransAlta Corporation	--None--
+T.TO	TELUS Corporation	--None--
+SXP.TO	Supremex Inc.	--None--
+SWP.TO	Swiss Water Decaffeinated Coffee Inc.	--None--
+SVM.TO	Silvercorp Metals Inc.	--None--
+SVB.TO	Silver Bull Resources, Inc.	--None--
+SU.TO	Suncor Energy Inc.	--None--
+STN.TO	Stantec Inc.	--None--
+STGO.TO	Steppe Gold Ltd.	--None--
+STEP.TO	STEP Energy Services Ltd.	--None--
+SSRM.TO	SSR Mining Inc.	--None--
+SSL.TO	Sandstorm Gold Ltd.	--None--
+SPPP.TO	Sprott Physical Platinum & Palladium Tr	--None--
+SPB.TO	Superior Plus Corp.	--None--
+SOY.TO	SunOpta Inc.	--None--
+SMC.TO	Sulliden Mining Capital Inc.	--None--
+SLR.TO	Solitario Resources Corp.	--None--
+SLF.TO	Sun Life Financial Inc.	--None--
+SJ.TO	Stella-Jones Inc.	--None--
+SIS.TO	Savaria Corporation	--None--
+SII.TO	Sprott Inc.	--None--
+SIA.TO	Sienna Senior Living Inc.	--None--
+SHOP.TO	Shopify Inc.	--None--
+SHLE.TO	Source Energy Services Ltd.	--None--
+SGY.TO	Surge Energy Inc.	--None--
+SFD.TO	NXT Energy Solutions Inc.	--None--
+SFC.TO	Sagicor Financial Company Ltd.	--None--
+SES.TO	SECURE Waste Infrastructure Corp.	--None--
+SEC.TO	Senvest Capital Inc.	--None--
+SEA.TO	Seabridge Gold Inc.	--None--
+SBI.TO	Serabi Gold plc	--None--
+SBC.TO	Brompton Split Banc Corp.	--None--
+SAU.TO	St. Augustine Gold and Copper Limited	--None--
+SAP.TO	Saputo Inc.	--None--
+SAM.TO	Starcore International Mines Ltd.	--None--
+S.TO	Sherritt International Corporation	--None--
+RY.TO	Royal Bank of Canada	--None--
+RVX.TO	Resverlogix Corp.	--None--
+RUS.TO	Russel Metals Inc.	--None--
+RTG.TO	RTG Mining Inc.	--None--
+RSI.TO	Rogers Sugar Inc.	--None--
+ROOT.TO	Roots Corporation	--None--
+REAL.TO	Real Matters Inc.	--None--
+RCH.TO	Richelieu Hardware Ltd.	--None--
+RBA.TO	RB Global, Inc.	--None--
+QTRH.TO	Quarterhill Inc.	--None--
+QSR.TO	Restaurant Brands International Inc.	--None--
+QEC.TO	Questerre Energy Corporation	--None--
+PZA.TO	Pizza Pizza Royalty Corp.	--None--
+PXT.TO	Parex Resources Inc.	--None--
+PTM.TO	Platinum Group Metals Ltd.	--None--
+PSLV.TO	Sprott Physical Silver Trust	--None--
+PSK.TO	PrairieSky Royalty Ltd.	--None--
+PSI.TO	Pason Systems Inc.	--None--
+PSD.TO	Pulse Seismic Inc.	--None--
+PRU.TO	Perseus Mining Limited	--None--
+PRQ.TO	Petrus Resources Ltd.	--None--
+PRN.TO	Profound Medical Corp.	--None--
+PRMW.TO	Primo Brands Corporation	--None--
+PRM.TO	Big Pharma Split Corp.	--None--
+PPR.TO	Prairie Provident Resources Inc.	--None--
+PPL.TO	Pembina Pipeline Corporation	--None--
+POW.TO	Power Corporation of Canada	--None--
+POU.TO	Paramount Resources Ltd.	--None--
+PNP.TO	Pinetree Capital Ltd.	--None--
+PNE.TO	Pine Cliff Energy Ltd.	--None--
+PME.TO	Sentry Select Primary Metals Corp.	--None--
+PKI.TO	Parkland Corporation	--None--
+PIF.TO	Polaris Renewable Energy Inc.	--None--
+PHYS.TO	Sprott Physical Gold Trust	--None--
+PHX.TO	PHX Energy Services Corp.	--None--
+PEY.TO	Peyto Exploration & Development Corp.	--None--
+PDV.TO	Prime Dividend Corp.	--None--
+PD.TO	Precision Drilling Corporation	--None--
+PBL.TO	Pollard Banknote Limited	--None--
+PBH.TO	Premium Brands Holdings Corporation	--None--
+PAAS.TO	Pan American Silver Corp.	--None--
+OVV.TO	Ovintiv Inc.	--None--
+OTEX.TO	Open Text Corporation	--None--
+ORV.TO	Orvana Minerals Corp.	--None--
+ORA.TO	Aura Minerals Inc.	--None--
+OR.TO	OR Royalties Inc.	--None--
+OPT.TO	Optiva Inc.	--None--
+ONEX.TO	Onex Corporation	--None--
+OLY.TO	Olympia Financial Group Inc.	--None--
+OLA.TO	Orla Mining Ltd.	--None--
+OGI.TO	Organigram Global Inc.	--None--
+OGD.TO	Orbit Garant Drilling Inc.	--None--
+OGC.TO	OceanaGold Corporation	--None--
+OBE.TO	Obsidian Energy Ltd.	--None--
+NXE.TO	NexGen Energy Ltd.	--None--
+NWC.TO	The North West Company Inc.	--None--
+NVA.TO	NuVista Energy Ltd.	--None--
+NTR.TO	Nutrien Ltd.	--None--
+NPK.TO	Verde AgriTech Limited	--None--
+NPI.TO	Northland Power Inc.	--None--
+NOA.TO	North American Construction Group Ltd.	--None--
+NGT.TO	Newmont Corporation	--None--
+NGD.TO	New Gold Inc.	--None--
+NG.TO	NovaGold Resources Inc.	--None--
+NFI.TO	NFI Group Inc.	--None--
+NEXT.TO	NextSource Materials Inc.	--None--
+NEO.TO	Neo Performance Materials Inc.	--None--
+NDM.TO	Northern Dynasty Minerals Ltd.	--None--
+NCF.TO	Northcliff Resources Ltd.	--None--
+NA.TO	National Bank of Canada	--None--
+MXG.TO	Maxim Power Corp.	--None--
+MX.TO	Methanex Corporation	--None--
+MUX.TO	McEwen Inc.	--None--
+MTY.TO	MTY Food Group Inc.	--None--
+MTL.TO	Mullen Group Ltd.	--None--
+MSV.TO	Minco Silver Corporation	--None--
+MRU.TO	Metro Inc.	--None--
+MRE.TO	Martinrea International Inc.	--None--
+MRD.TO	Melcor Developments Ltd.	--None--
+MRC.TO	Morguard Corporation	--None--
+MPVD.TO	Mountain Province Diamonds Inc.	--None--
+MPC.TO	Madison Pacific Properties Inc.	--None--
+MOGO.TO	Mogo Inc.	--None--
+MKP.TO	MCAN Mortgage Corporation	--None--
+MINN.TO	Middlefield Innovation Dividend ETF	--None--
+MGA.TO	Mega Uranium Ltd.	--None--
+MG.TO	Magna International Inc.	--None--
+MFI.TO	Maple Leaf Foods Inc.	--None--
+MFC.TO	Manulife Financial Corporation	--None--
+MEQ.TO	Mainstreet Equity Corp.	--None--
+MEG.TO	MEG Energy Corp.	--None--
+MDNA.TO	Medicenna Therapeutics Corp.	--None--
+MDI.TO	Major Drilling Group International Inc.	--None--
+MCB.TO	McCoy Global Inc.	--None--
+MBX.TO	Microbix Biosystems Inc.	--None--
+MAL.TO	Magellan Aerospace Corporation	--None--
+MAG.TO	MAG Silver Corp.	--None--
+LUN.TO	Lundin Mining Corporation	--None--
+LUG.TO	Lundin Gold Inc.	--None--
+LUC.TO	Lucara Diamond Corp.	--None--
+LSPD.TO	Lightspeed Commerce Inc.	--None--
+LNR.TO	Linamar Corporation	--None--
+LNF.TO	Leon's Furniture Limited	--None--
+LN.TO	Loncor Gold Inc.	--None--
+LIF.TO	Labrador Iron Ore Royalty Corporation	--None--
+LGO.TO	Largo Inc.	--None--
+LGD.TO	Liberty Gold Corp.	--None--
+LFE.TO	Canadian Life Companies Split Corp.	--None--
+LCS.TO	Brompton Lifeco Split Corp.	--None--
+LBS.TO	Life & Banc Split Corp.	--None--
+LB.TO	Laurentian Bank of Canada	--None--
+LAM.TO	Laramide Resources Ltd.	--None--
+LAC.TO	Lithium Americas Corp.	--None--
+LABS.TO	MediPharm Labs Corp.	--None--
+L.TO	Loblaw Companies Limited	--None--
+KXS.TO	Kinaxis Inc.	--None--
+KRN.TO	Karnalyte Resources Inc.	--None--
+KPT.TO	KP Tissue Inc.	--None--
+KLS.TO	Kelso Technologies Inc.	--None--
+KEY.TO	Keyera Corp.	--None--
+KEL.TO	Kelt Exploration Ltd.	--None--
+KBL.TO	K-Bro Linen Inc.	--None--
+K.TO	Kinross Gold Corporation	--None--
+JWEL.TO	Jamieson Wellness Inc.	--None--
+JOY.TO	Journey Energy Inc.	--None--
+JAG.TO	Jaguar Mining Inc.	--None--
+IVQ.TO	Invesque Inc.	--None--
+IVN.TO	Ivanhoe Mines Ltd.	--None--
+ITH.TO	International Tower Hill Mines Ltd.	--None--
+IPO.TO	InPlay Oil Corp.	--None--
+IPCO.TO	International Petroleum Corporation	--None--
+IMP.TO	Intermap Technologies Corporation	--None--
+IMO.TO	Imperial Oil Limited	--None--
+IMG.TO	IAMGOLD Corporation	--None--
+III.TO	Imperial Metals Corporation	--None--
+IGM.TO	IGM Financial Inc.	--None--
+IFP.TO	Interfor Corporation	--None--
+IFC.TO	Intact Financial Corporation	--None--
+IFA.TO	iFabric Corp.	--None--
+ICE.TO	Canlan Ice Sports Corp.	--None--
+IAG.TO	iA Financial Corporation Inc.	--None--
+HWX.TO	Headwater Exploration Inc.	--None--
+HWO.TO	High Arctic Energy Services Inc	--None--
+HUT.TO	Hut 8 Corp.	--None--
+HLS.TO	HLS Therapeutics Inc.	--None--
+HLF.TO	High Liner Foods Incorporated	--None--
+HBP.TO	Helix BioPharma Corp.	--None--
+HBM.TO	Hudbay Minerals Inc.	--None--
+H.TO	Hydro One Limited	--None--
+GWO.TO	Great-West Lifeco Inc.	--None--
+GVC.TO	Glacier Media Inc.	--None--
+GUD.TO	Knight Therapeutics Inc.	--None--
+GTE.TO	Gran Tierra Energy Inc.	--None--
+GSY.TO	goeasy Ltd.	--None--
+GRC.TO	Gold Springs Resource Corp.	--None--
+GOOS.TO	Canada Goose Holdings Inc.	--None--
+GOLD.TO	GoldMining Inc.	--None--
+GMX.TO	Globex Mining Enterprises Inc.	--None--
+GLO.TO	Global Atomic Corporation	--None--
+GIL.TO	Gildan Activewear Inc.	--None--
+GH.TO	Gamehost Inc.	--None--
+GGD.TO	GoGold Resources Inc.	--None--
+GFL.TO	GFL Environmental Inc.	--None--
+GEO.TO	Geodrill Limited	--None--
+GEI.TO	Gibson Energy Inc.	--None--
+GDV.TO	Global Dividend Growth Split Corp.	--None--
+GDL.TO	Goodfellow Inc.	--None--
+GDI.TO	GDI Integrated Facility Services Inc.	--None--
+GDC.TO	Genesis Land Development Corp.	--None--
+GCL.TO	Colabor Group Inc.	--None--
+GCG.TO	Guardian Capital Group Limited	--None--
+GBT.TO	BMTC Group Inc.	--None--
+FVL.TO	Freegold Ventures Limited	--None--
+FVI.TO	Fortuna Mining Corp.	--None--
+FTU.TO	US Financial 15 Split Corp	--None--
+FTT.TO	Finning International Inc.	--None--
+FTS.TO	Fortis Inc.	--None--
+FTN.TO	Financial 15 Split Corp.	--None--
+FTG.TO	Firan Technology Group Corporation	--None--
+FT.TO	Fortune Minerals Limited	--None--
+FSZ.TO	Fiera Capital Corporation	--None--
+FSY.TO	Forsys Metals Corp.	--None--
+FSV.TO	FirstService Corporation	--None--
+FRX.TO	Fennec Pharmaceuticals Inc.	--None--
+FRU.TO	Freehold Royalties Ltd.	--None--
+FOOD.TO	Goodfood Market Corp.	--None--
+FNV.TO	Franco-Nevada Corporation	--None--
+FN.TO	First National Financial Corporation	--None--
+FM.TO	First Quantum Minerals Ltd.	--None--
+FFN.TO	North American Financial 15 Split Corp.	--None--
+FF.TO	First Mining Gold Corp.	--None--
+FEC.TO	Frontera Energy Corporation	--None--
+FC.TO	Firm Capital Mortgage Investment Corporation	--None--
+FAR.TO	Foraco International SA	--None--
+FAP.TO	abrdn Asia-Pacific Income Fund VCC Ord	--None--
+EXE.TO	Extendicare Inc.	--None--
+EVT.TO	Economic Investment Trust Limited	--None--
+ETG.TO	Entrée Resources Ltd.	--None--
+ET.TO	Evertz Technologies Limited	--None--
+ESM.TO	Euro Sun Mining Inc.	--None--
+ESI.TO	Ensign Energy Services Inc.	--None--
+ERO.TO	Ero Copper Corp.	--None--
+ERD.TO	Erdene Resource Development Corporation	--None--
+EQX.TO	Equinox Gold Corp.	--None--
+EQB.TO	EQB Inc.	--None--
+ENS.TO	E Split Corp.	--None--
+ENGH.TO	Enghouse Systems Limited	--None--
+ENB.TO	Enbridge Inc.	--None--
+EMA.TO	Emera Incorporated	--None--
+ELR.TO	Eastern Platinum Limited	--None--
+ELF.TO	E-L Financial Corporation Limited	--None--
+ELEF.TO	Silver Elephant Mining Corp.	--None--
+ELD.TO	Eldorado Gold Corporation	--None--
+EIF.TO	Exchange Income Corporation	--None--
+EGLX.TO	Enthusiast Gaming Holdings Inc.	--None--
+EFX.TO	Enerflex Ltd.	--None--
+EFR.TO	Energy Fuels Inc.	--None--
+EFN.TO	Element Fleet Management Corp.	--None--
+EDV.TO	Endeavour Mining plc	--None--
+EDT.TO	Spectral Medical Inc.	--None--
+EDR.TO	Endeavour Silver Corp.	--None--
+ECO.TO	EcoSynthetix Inc.	--None--
+ECN.TO	ECN Capital Corp.	--None--
+E.TO	Enterprise Group, Inc.	--None--
+DSG.TO	The Descartes Systems Group Inc.	--None--
+DS.TO	Dividend Select 15 Corp.	--None--
+DRX.TO	ADF Group Inc.	--None--
+DRT.TO	DIRTT Environmental Solutions Ltd.	--None--
+DRM.TO	Dream Unlimited Corp.	--None--
+DR.TO	Medical Facilities Corporation	--None--
+DPM.TO	DPM Metals Inc.	--None--
+DOO.TO	BRP Inc.	--None--
+DOL.TO	Dollarama Inc.	--None--
+DNG.TO	Dynacor Group Inc.	--None--
+DML.TO	Denison Mines Corp.	--None--
+DIV.TO	Diversified Royalty Corp.	--None--
+DIAM.TO	Star Diamond Corporation	--None--
+DGS.TO	Dividend Growth Split Corp.	--None--
+DFN.TO	Dividend 15 Split Corp.	--None--
+DF.TO	Dividend 15 Split Corp. II	--None--
+DCM.TO	DATA Communications Management Corp.	--None--
+DCBO.TO	Docebo Inc.	--None--
+DBO.TO	D-BOX Technologies Inc.	--None--
+CYB.TO	Cymbria Corporation	--None--
+CXI.TO	Currency Exchange International, Corp.	--None--
+CWL.TO	The Caldwell Partners International Inc.	--None--
+CWEB.TO	Charlotte's Web Holdings, Inc.	--None--
+CVG.TO	Clairvest Group Inc.	--None--
+CVE.TO	Cenovus Energy Inc.	--None--
+CU.TO	Canadian Utilities Limited	--None--
+CTX.TO	Crescita Therapeutics Inc.	--None--
+CTC.TO	Canadian Tire Corporation, Limited	--None--
+CSU.TO	Constellation Software Inc.	--None--
+CS.TO	Capstone Copper Corp.	--None--
+CRWN.TO	Crown Capital Partners Inc.	--None--
+CRON.TO	Cronos Group Inc.	--None--
+CRDL.TO	Cardiol Therapeutics Inc.	--None--
+CPX.TO	Capital Power Corporation	--None--
+CPH.TO	Cipher Pharmaceuticals Inc.	--None--
+CP.TO	Canadian Pacific Kansas City Limited	--None--
+CNT.TO	Century Global Commodities Corporation	--None--
+CNR.TO	Canadian National Railway Company	--None--
+CNQ.TO	Canadian Natural Resources Limited	--None--
+CNE.TO	Canacol Energy Ltd	--None--
+CMG.TO	Computer Modelling Group Ltd.	--None--
+CM.TO	Canadian Imperial Bank of Commerce	--None--
+CLS.TO	Celestica Inc.	--None--
+CKI.TO	Clarke Inc.	--None--
+CJT.TO	Cargojet Inc.	--None--
+CJ.TO	Cardinal Energy Ltd.	--None--
+CIGI.TO	Colliers International Group Inc.	--None--
+CIA.TO	Champion Iron Limited	--None--
+CHR.TO	Chorus Aviation Inc.	--None--
+CGY.TO	Calian Group Ltd.	--None--
+CGX.TO	Cineplex Inc.	--None--
+CGO.TO	Cogeco Inc.	--None--
+CGI.TO	Canadian General Investments Ord	--None--
+CGHY.TO	CI High Yield Bond Private Pool ETF C$ Series	--None--
+CGG.TO	China Gold International Resources Corp. Ltd.	--None--
+CG.TO	Centerra Gold Inc.	--None--
+CFX.TO	Canfor Pulp Products Inc.	--None--
+CFW.TO	Calfrac Well Services Ltd.	--None--
+CFP.TO	Canfor Corporation	--None--
+CFF.TO	Conifex Timber Inc.	--None--
+CF.TO	Canaccord Genuity Group Inc.	--None--
+CEU.TO	CES Energy Solutions Corp.	--None--
+CEF.TO	Sprott Physical Gold and Silver Trust	--None--
+CCO.TO	Cameco Corporation	--None--
+CCM.TO	Canagold Resources Ltd.	--None--
+CCA.TO	Cogeco Communications Inc.	--None--
+CAS.TO	Cascades Inc.	--None--
+CAE.TO	CAE Inc.	--None--
+BYL.TO	Baylin Technologies Inc.	--None--
+BYD.TO	Boyd Group Services Inc.	--None--
+BU.TO	Burcon NutraScience Corporation	--None--
+BTO.TO	B2Gold Corp.	--None--
+BTE.TO	Baytex Energy Corp.	--None--
+BSX.TO	Belo Sun Mining Corp	--None--
+BRY.TO	Bri-Chem Corp.	--None--
+BRE.TO	Bridgemarq Real Estate Services Inc.	--None--
+BR.TO	Big Rock Brewery Inc.	--None--
+BOS.TO	AirBoss of America Corp.	--None--
+BNG.TO	Bengal Energy Ltd.	--None--
+BNE.TO	Bonterra Energy Corp.	--None--
+BMO.TO	Bank of Montreal	--None--
+BLX.TO	Boralex Inc.	--None--
+BLDP.TO	Ballard Power Systems Inc.	--None--
+BKI.TO	Black Iron Inc.	--None--
+BK.TO	Canadian Banc Corp.	--None--
+BIR.TO	Birchcliff Energy Ltd.	--None--
+BHC.TO	Bausch Health Companies Inc.	--None--
+BDT.TO	Bird Construction Inc.	--None--
+BDI.TO	Black Diamond Group Limited	--None--
+BCE.TO	BCE Inc.	--None--
+BB.TO	BlackBerry Limited	--None--
+AVL.TO	Avalon Advanced Materials Inc.	--None--
+AVCN.TO	Avicanna Inc.	--None--
+AUMN.TO	Golden Minerals Company	--None--
+ATZ.TO	Aritzia Inc.	--None--
+ATH.TO	Athabasca Oil Corporation	--None--
+ASM.TO	Avino Silver & Gold Mines Ltd.	--None--
+ARX.TO	ARC Resources Ltd.	--None--
+ARG.TO	Amerigo Resources Ltd.	--None--
+ARE.TO	Aecon Group Inc.	--None--
+AQN.TO	Algonquin Power & Utilities Corp.	--None--
+APS.TO	Aptose Biosciences Inc.	--None--
+AOT.TO	Ascot Resources Ltd.	--None--
+AND.TO	Andlauer Healthcare Group Inc.	--None--
+ALYA.TO	Alithya Group Inc.	--None--
+ALS.TO	Altius Minerals Corporation	--None--
+ALC.TO	Algoma Central Corporation	--None--
+ALA.TO	AltaGas Ltd.	--None--
+AIM.TO	Aimia Inc.	--None--
+AII.TO	Almonty Industries Inc.	--None--
+AIF.TO	Altus Group Limited	--None--
+AI.TO	Atrium Mortgage Investment Corporation	--None--
+AGI.TO	Alamos Gold Inc.	--None--
+AFN.TO	Ag Growth International Inc.	--None--
+AEM.TO	Agnico Eagle Mines Limited	--None--
+ADN.TO	Acadian Timber Corp.	--None--
+ACQ.TO	AutoCanada Inc.	--None--
+ACD.TO	Accord Financial Corp.	--None--
+ACB.TO	Aurora Cannabis Inc.	--None--
+AC.TO	Air Canada	--None--
+ABX.TO	Barrick Mining Corporation	--None--
+AAV.TO	Advantage Energy Ltd.	--None--
+AAB.TO	Aberdeen International Inc.	--None--
+ZTS	Zoetis Inc.	--None--
+ZBH	Zimmer Biomet Holdings, Inc.	--None--
+ZBRA	Zebra Technologies Corporation	--None--
+YUM	Yum! Brands, Inc.	--None--
+XYL	Xylem Inc.	--None--
+XEL	Xcel Energy Inc.	--None--
+WYNN	Wynn Resorts, Limited	--None--
+WDAY	Workday, Inc.	--None--
+WTW	Willis Towers Watson Public Limited Company	--None--
+WMB	The Williams Companies, Inc.	--None--
+WSM	Williams-Sonoma, Inc.	--None--
+WY	Weyerhaeuser Company	--None--
+WDC	Western Digital Corporation	--None--
+WST	West Pharmaceutical Services, Inc.	--None--
+WELL	Welltower Inc.	--None--
+WFC	Wells Fargo & Company	--None--
+WEC	WEC Energy Group, Inc.	--None--
+WAT	Waters Corporation	--None--
+WM	Waste Management, Inc.	--None--
+WBD	Warner Bros. Discovery, Inc.	--None--
+DIS	The Walt Disney Company	--None--
+WMT	Walmart Inc.	--None--
+WAB	Westinghouse Air Brake Technologies Corporation	--None--
+GWW	W.W. Grainger, Inc.	--None--
+WRB	W. R. Berkley Corporation	--None--
+VMC	Vulcan Materials Company	--None--
+V	Visa Inc.	--None--
+VICI	VICI Properties Inc.	--None--
+VTRS	Viatris Inc.	--None--
+VRTX	Vertex Pharmaceuticals Incorporated	--None--
+VZ	Verizon Communications Inc.	--None--
+VRSK	Verisk Analytics, Inc.	--None--
+VRSN	VeriSign, Inc.	--None--
+VLTO	Veralto Corporation	--None--
+VLO	Valero Energy Corporation	--None--
+UHS	Universal Health Services, Inc.	--None--
+UNH	UnitedHealth Group Incorporated	--None--
+URI	United Rentals, Inc.	--None--
+UPS	United Parcel Service, Inc.	--None--
+UNP	Union Pacific Corporation	--None--
+ULTA	Ulta Beauty, Inc.	--None--
+UDR	UDR, Inc.	--None--
+UBER	Uber Technologies, Inc.	--None--
+USB	U.S. Bancorp	--None--
+TSN	Tyson Foods, Inc.	--None--
+TYL	Tyler Technologies, Inc.	--None--
+TFC	Truist Financial Corporation	--None--
+TRMB	Trimble Inc.	--None--
+TRV	The Travelers Companies, Inc.	--None--
+TDG	TransDigm Group Incorporated	--None--
+TT	Trane Technologies plc	--None--
+TSCO	Tractor Supply Company	--None--
+TTD	The Trade Desk, Inc.	--None--
+TKO	TKO Group Holdings, Inc.	--None--
+TJX	The TJX Companies, Inc.	--None--
+TMO	Thermo Fisher Scientific Inc.	--None--
+TXT	Textron Inc.	--None--
+TPL	Texas Pacific Land Corporation	--None--
+TXN	Texas Instruments Incorporated	--None--
+TSLA	Tesla, Inc.	--None--
+TER	Teradyne, Inc.	--None--
+TDY	Teledyne Technologies Incorporated	--None--
+TEL	TE Connectivity plc	--None--
+TGT	Target Corporation	--None--
+TPR	Tapestry, Inc.	--None--
+TTWO	Take-Two Interactive Software, Inc.	--None--
+TROW	T. Rowe Price Group, Inc.	--None--
+TMUS	T-Mobile US, Inc.	--None--
+SYY	Sysco Corporation	--None--
+SNPS	Synopsys, Inc.	--None--
+SYF	Synchrony Financial	--None--
+SMCI	Super Micro Computer, Inc.	--None--
+SYK	Stryker Corporation	--None--
+STE	STERIS plc	--None--
+STLD	Steel Dynamics, Inc.	--None--
+STT	State Street Corporation	--None--
+SBUX	Starbucks Corporation	--None--
+SWK	Stanley Black & Decker, Inc.	--None--
+LUV	Southwest Airlines Co.	--None--
+SO	The Southern Company	--None--
+SOLV	Solventum Corporation	--None--
+SNA	Snap-on Incorporated	--None--
+SW	Smurfit Westrock Plc	--None--
+SJM	The J. M. Smucker Company	--None--
+SWKS	Skyworks Solutions, Inc.	--None--
+SPG	Simon Property Group, Inc.	--None--
+SHW	The Sherwin-Williams Company	--None--
+NOW	ServiceNow, Inc.	--None--
+SRE	Sempra	--None--
+STX	Seagate Technology Holdings plc	--None--
+SLB	Schlumberger Limited	--None--
+SBAC	SBA Communications Corporation	--None--
+CRM	Salesforce, Inc.	--None--
+SPGI	S&P Global Inc.	--None--
+RCL	Royal Caribbean Cruises Ltd.	--None--
+ROST	Ross Stores, Inc.	--None--
+ROP	Roper Technologies, Inc.	--None--
+ROL	Rollins, Inc.	--None--
+ROK	Rockwell Automation, Inc.	--None--
+HOOD	Robinhood Markets, Inc.	--None--
+RVTY	Revvity, Inc.	--None--
+RMD	ResMed Inc.	--None--
+RSG	Republic Services, Inc.	--None--
+RF	Regions Financial Corporation	--None--
+REGN	Regeneron Pharmaceuticals, Inc.	--None--
+REG	Regency Centers Corporation	--None--
+O	Realty Income Corporation	--None--
+RTX	RTX Corporation	--None--
+RJF	Raymond James Financial, Inc.	--None--
+RL	Ralph Lauren Corporation	--None--
+DGX	Quest Diagnostics Incorporated	--None--
+QCOM	QUALCOMM Incorporated	--None--
+PWR	Quanta Services, Inc.	--None--
+PHM	PulteGroup, Inc.	--None--
+PSA	Public Storage	--None--
+PTC	PTC Inc.	--None--
+PEG	Public Service Enterprise Group Incorporated	--None--
+PRU	Prudential Financial, Inc.	--None--
+PLD	Prologis, Inc.	--None--
+PGR	The Progressive Corporation	--None--
+PG	The Procter & Gamble Company	--None--
+PFG	Principal Financial Group, Inc.	--None--
+PPL	PPL Corporation	--None--
+PPG	PPG Industries, Inc.	--None--
+POOL	Pool Corporation	--None--
+PNC	The PNC Financial Services Group, Inc.	--None--
+PNW	Pinnacle West Capital Corporation	--None--
+PSX	Phillips 66	--None--
+PM	Philip Morris International Inc.	--None--
+PCG	PG&E Corporation	--None--
+PFE	Pfizer Inc.	--None--
+PEP	PepsiCo, Inc.	--None--
+PNR	Pentair plc	--None--
+PYPL	PayPal Holdings, Inc.	--None--
+PAYC	Paycom Software, Inc.	--None--
+PAYX	Paychex, Inc.	--None--
+PH	Parker-Hannifin Corporation	--None--
+PSKY	Paramount Skydance Corporation	--None--
+PANW	Palo Alto Networks, Inc.	--None--
+PKG	Packaging Corporation of America	--None--
+PCAR	PACCAR Inc	--None--
+OTIS	Otis Worldwide Corporation	--None--
+ORCL	Oracle Corporation	--None--
+OKE	ONEOK, Inc.	--None--
+ON	ON Semiconductor Corporation	--None--
+OMC	Omnicom Group Inc.	--None--
+ODFL	Old Dominion Freight Line, Inc.	--None--
+OXY	Occidental Petroleum Corporation	--None--
+ORLY	O'Reilly Automotive, Inc.	--None--
+NXPI	NXP Semiconductors N.V.	--None--
+NVR	NVR, Inc.	--None--
+NVDA	NVIDIA Corporation	--None--
+NUE	Nucor Corporation	--None--
+NRG	NRG Energy, Inc.	--None--
+NCLH	Norwegian Cruise Line Holdings Ltd.	--None--
+NOC	Northrop Grumman Corporation	--None--
+NTRS	Northern Trust Corporation	--None--
+NSC	Norfolk Southern Corporation	--None--
+NDSN	Nordson Corporation	--None--
+NI	NiSource Inc.	--None--
+NKE	NIKE, Inc.	--None--
+NEE	NextEra Energy, Inc.	--None--
+NWS	News Corporation	--None--
+NWSA	News Corporation	--None--
+NEM	Newmont Corporation	--None--
+NFLX	Netflix, Inc.	--None--
+NTAP	NetApp, Inc.	--None--
+NDAQ	Nasdaq, Inc.	--None--
+MSCI	MSCI Inc.	--None--
+MSI	Motorola Solutions, Inc.	--None--
+MOS	The Mosaic Company	--None--
+MS	Morgan Stanley	--None--
+MCO	Moody's Corporation	--None--
+MNST	Monster Beverage Corporation	--None--
+MPWR	Monolithic Power Systems, Inc.	--None--
+MDLZ	Mondelez International, Inc.	--None--
+TAP	Molson Coors Beverage Company	--None--
+MOH	Molina Healthcare, Inc.	--None--
+MHK	Mohawk Industries, Inc.	--None--
+MRNA	Moderna, Inc.	--None--
+MAA	Mid-America Apartment Communities, Inc.	--None--
+MSFT	Microsoft Corporation	--None--
+MU	Micron Technology, Inc.	--None--
+MCHP	Microchip Technology Incorporated	--None--
+MGM	MGM Resorts International	--None--
+MTD	Mettler-Toledo International Inc.	--None--
+MET	MetLife, Inc.	--None--
+META	Meta Platforms, Inc.	--None--
+MRK	Merck & Co., Inc.	--None--
+MDT	Medtronic plc	--None--
+MCK	McKesson Corporation	--None--
+MCD	McDonald's Corporation	--None--
+MKC	McCormick & Company, Incorporated	--None--
+MTCH	Match Group, Inc.	--None--
+MA	Mastercard Incorporated	--None--
+MAS	Masco Corporation	--None--
+MLM	Martin Marietta Materials, Inc.	--None--
+MMC	Marsh & McLennan Companies, Inc.	--None--
+MAR	Marriott International, Inc.	--None--
+MPC	Marathon Petroleum Corporation	--None--
+MTB	M&T Bank Corporation	--None--
+LYB	LyondellBasell Industries N.V.	--None--
+LULU	lululemon athletica inc.	--None--
+LOW	Lowe's Companies, Inc.	--None--
+L	Loews Corporation	--None--
+LMT	Lockheed Martin Corporation	--None--
+LKQ	LKQ Corporation	--None--
+LYV	Live Nation Entertainment, Inc.	--None--
+LIN	Linde plc	--None--
+LLY	Eli Lilly and Company	--None--
+LII	Lennox International Inc.	--None--
+LEN	Lennar Corporation	--None--
+LDOS	Leidos Holdings, Inc.	--None--
+LVS	Las Vegas Sands Corp.	--None--
+LW	Lamb Weston Holdings, Inc.	--None--
+LRCX	Lam Research Corporation	--None--
+LH	Labcorp Holdings Inc.	--None--
+LHX	L3Harris Technologies, Inc.	--None--
+KR	The Kroger Co.	--None--
+KHC	The Kraft Heinz Company	--None--
+KLAC	KLA Corporation	--None--
+KKR	KKR & Co. Inc.	--None--
+KMI	Kinder Morgan, Inc.	--None--
+KIM	Kimco Realty Corporation	--None--
+KMB	Kimberly-Clark Corporation	--None--
+KEYS	Keysight Technologies, Inc.	--None--
+KEY	KeyCorp	--None--
+KDP	Keurig Dr Pepper Inc.	--None--
+KVUE	Kenvue Inc.	--None--
+K	Kellanova	--None--
+JPM	JPMorgan Chase & Co.	--None--
+JCI	Johnson Controls International plc	--None--
+JNJ	Johnson & Johnson	--None--
+J	Jacobs Solutions Inc.	--None--
+JKHY	Jack Henry & Associates, Inc.	--None--
+JBL	Jabil Inc.	--None--
+JBHT	J.B. Hunt Transport Services, Inc.	--None--
+IQV	IQVIA Holdings Inc.	--None--
+INVH	Invitation Homes Inc.	--None--
+IVZ	Invesco Ltd.	--None--
+ISRG	Intuitive Surgical, Inc.	--None--
+INTU	Intuit Inc.	--None--
+IPG	The Interpublic Group of Companies, Inc.	--None--
+IP	International Paper Company	--None--
+IFF	International Flavors & Fragrances Inc.	--None--
+ICE	Intercontinental Exchange, Inc.	--None--
+IBKR	Interactive Brokers Group, Inc.	--None--
+INTC	Intel Corporation	--None--
+PODD	Insulet Corporation	--None--
+IR	Ingersoll Rand Inc.	--None--
+INCY	Incyte Corporation	--None--
+ITW	Illinois Tool Works Inc.	--None--
+IDXX	IDEXX Laboratories, Inc.	--None--
+IEX	IDEX Corporation	--None--
+IBM	International Business Machines Corporation	--None--
+HII	Huntington Ingalls Industries, Inc.	--None--
+HBAN	Huntington Bancshares Incorporated	--None--
+HUM	Humana Inc.	--None--
+HUBB	Hubbell Incorporated	--None--
+HPQ	HP Inc.	--None--
+HWM	Howmet Aerospace Inc.	--None--
+HST	Host Hotels & Resorts, Inc.	--None--
+HRL	Hormel Foods Corporation	--None--
+HON	Honeywell International Inc.	--None--
+HD	The Home Depot, Inc.	--None--
+HOLX	Hologic, Inc.	--None--
+HLT	Hilton Worldwide Holdings Inc.	--None--
+HPE	Hewlett Packard Enterprise Company	--None--
+HSY	The Hershey Company	--None--
+HSIC	Henry Schein, Inc.	--None--
+DOC	Healthpeak Properties, Inc.	--None--
+HCA	HCA Healthcare, Inc.	--None--
+HAS	Hasbro, Inc.	--None--
+HIG	The Hartford Insurance Group, Inc.	--None--
+HAL	Halliburton Company	--None--
+GS	The Goldman Sachs Group, Inc.	--None--
+GDDY	GoDaddy Inc.	--None--
+GL	Globe Life Inc.	--None--
+GPN	Global Payments Inc.	--None--
+GILD	Gilead Sciences, Inc.	--None--
+GPC	Genuine Parts Company	--None--
+GM	General Motors Company	--None--
+GIS	General Mills, Inc.	--None--
+GD	General Dynamics Corporation	--None--
+GNRC	Generac Holdings Inc.	--None--
+GEN	Gen Digital Inc.	--None--
+GEHC	GE HealthCare Technologies Inc.	--None--
+GE	GE Aerospace	--None--
+IT	Gartner, Inc.	--None--
+GRMN	Garmin Ltd.	--None--
+FCX	Freeport-McMoRan Inc.	--None--
+BEN	Franklin Resources, Inc.	--None--
+FOX	Fox Corporation	--None--
+FOXA	Fox Corporation	--None--
+FTV	Fortive Corporation	--None--
+F	Ford Motor Company	--None--
+FI	Fiserv, Inc.	--None--
+FE	FirstEnergy Corp.	--None--
+FSLR	First Solar, Inc.	--None--
+FITB	Fifth Third Bancorp	--None--
+FIS	Fidelity National Information Services, Inc.	--None--
+FDX	FedEx Corporation	--None--
+FRT	Federal Realty Investment Trust	--None--
+FAST	Fastenal Company	--None--
+FDS	FactSet Research Systems Inc.	--None--
+FFIV	F5, Inc.	--None--
+XOM	Exxon Mobil Corporation	--None--
+EXR	Extra Space Storage Inc.	--None--
+EXPD	Expeditors International of Washington, Inc.	--None--
+EXPE	Expedia Group, Inc.	--None--
+EXE	Expand Energy Corporation	--None--
+EXC	Exelon Corporation	--None--
+ES	Eversource Energy	--None--
+EVRG	Evergy, Inc.	--None--
+EG	Everest Group, Ltd.	--None--
+EL	The Estée Lauder Companies Inc.	--None--
+ESS	Essex Property Trust, Inc.	--None--
+ERIE	Erie Indemnity Company	--None--
+EQR	Equity Residential	--None--
+EQIX	Equinix, Inc.	--None--
+EFX	Equifax Inc.	--None--
+EQT	EQT Corporation	--None--
+EPAM	EPAM Systems, Inc.	--None--
+EOG	EOG Resources, Inc.	--None--
+ETR	Entergy Corporation	--None--
+EMR	Emerson Electric Co.	--None--
+EME	EMCOR Group, Inc.	--None--
+ELV	Elevance Health, Inc.	--None--
+EA	Electronic Arts Inc.	--None--
+EW	Edwards Lifesciences Corporation	--None--
+EIX	Edison International	--None--
+ECL	Ecolab Inc.	--None--
+EBAY	eBay Inc.	--None--
+ETN	Eaton Corporation plc	--None--
+EMN	Eastman Chemical Company	--None--
+DD	DuPont de Nemours, Inc.	--None--
+DUK	Duke Energy Corporation	--None--
+DTE	DTE Energy Company	--None--
+DHI	D.R. Horton, Inc.	--None--
+DOW	Dow Inc.	--None--
+DOV	Dover Corporation	--None--
+DASH	DoorDash, Inc.	--None--
+DPZ	Domino's Pizza, Inc.	--None--
+D	Dominion Energy, Inc.	--None--
+DLTR	Dollar Tree, Inc.	--None--
+DG	Dollar General Corporation	--None--
+DLR	Digital Realty Trust, Inc.	--None--
+FANG	Diamondback Energy, Inc.	--None--
+DXCM	DexCom, Inc.	--None--
+DVN	Devon Energy Corporation	--None--
+DAL	Delta Air Lines, Inc.	--None--
+DELL	Dell Technologies Inc.	--None--
+DE	Deere & Company	--None--
+DECK	Deckers Outdoor Corporation	--None--
+DAY	Dayforce Inc	--None--
+DVA	DaVita Inc.	--None--
+DDOG	Datadog, Inc.	--None--
+DRI	Darden Restaurants, Inc.	--None--
+DHR	Danaher Corporation	--None--
+CVS	CVS Health Corporation	--None--
+CMI	Cummins Inc.	--None--
+CSX	CSX Corporation	--None--
+CCI	Crown Castle Inc.	--None--
+CRWD	CrowdStrike Holdings, Inc.	--None--
+CTRA	Coterra Energy Inc.	--None--
+COST	Costco Wholesale Corporation	--None--
+CSGP	CoStar Group, Inc.	--None--
+CTVA	Corteva, Inc.	--None--
+CPAY	Corpay, Inc.	--None--
+GLW	Corning Incorporated	--None--
+CPRT	Copart, Inc.	--None--
+COO	The Cooper Companies, Inc.	--None--
+CEG	Constellation Energy Corporation	--None--
+STZ	Constellation Brands, Inc.	--None--
+ED	Consolidated Edison, Inc.	--None--
+COP	ConocoPhillips	--None--
+CAG	Conagra Brands, Inc.	--None--
+CMCSA	Comcast Corporation	--None--
+CL	Colgate-Palmolive Company	--None--
+COIN	Coinbase Global, Inc.	--None--
+CTSH	Cognizant Technology Solutions Corporation	--None--
+KO	The Coca-Cola Company	--None--
+CMS	CMS Energy Corporation	--None--
+CME	CME Group Inc.	--None--
+CLX	The Clorox Company	--None--
+CFG	Citizens Financial Group, Inc.	--None--
+C	Citigroup Inc.	--None--
+CSCO	Cisco Systems, Inc.	--None--
+CTAS	Cintas Corporation	--None--
+CINF	Cincinnati Financial Corporation	--None--
+CI	The Cigna Group	--None--
+CHD	Church & Dwight Co., Inc.	--None--
+CB	Chubb Limited	--None--
+CMG	Chipotle Mexican Grill, Inc.	--None--
+CVX	Chevron Corporation	--None--
+CHTR	Charter Communications, Inc.	--None--
+SCHW	The Charles Schwab Corporation	--None--
+CRL	Charles River Laboratories International, Inc.	--None--
+CF	CF Industries Holdings, Inc.	--None--
+CNP	CenterPoint Energy, Inc.	--None--
+CNC	Centene Corporation	--None--
+COR	Cencora, Inc.	--None--
+CDW	CDW Corporation	--None--
+CBRE	CBRE Group, Inc.	--None--
+CBOE	Cboe Global Markets, Inc.	--None--
+CAT	Caterpillar Inc.	--None--
+CARR	Carrier Global Corporation	--None--
+CCL	Carnival Corporation & plc	--None--
+KMX	CarMax, Inc.	--None--
+CAH	Cardinal Health, Inc.	--None--
+COF	Capital One Financial Corporation	--None--
+CPB	The Campbell's Company	--None--
+CPT	Camden Property Trust	--None--
+CDNS	Cadence Design Systems, Inc.	--None--
+BXP	BXP, Inc.	--None--
+BG	Bunge Global SA	--None--
+BLDR	Builders FirstSource, Inc.	--None--
+BRO	Brown & Brown, Inc.	--None--
+BR	Broadridge Financial Solutions, Inc.	--None--
+AVGO	Broadcom Inc.	--None--
+BMY	Bristol-Myers Squibb Company	--None--
+BSX	Boston Scientific Corporation	--None--
+BKNG	Booking Holdings Inc.	--None--
+BA	The Boeing Company	--None--
+BK	The Bank of New York Mellon Corporation	--None--
+XYZ	Block, Inc.	--None--
+BX	Blackstone Inc.	--None--
+BLK	BlackRock, Inc.	--None--
+BIIB	Biogen Inc.	--None--
+TECH	Bio-Techne Corporation	--None--
+BBY	Best Buy Co., Inc.	--None--
+BDX	Becton, Dickinson and Company	--None--
+BAX	Baxter International Inc.	--None--
+BAC	Bank of America Corporation	--None--
+BALL	Ball Corporation	--None--
+BKR	Baker Hughes Company	--None--
+AVY	Avery Dennison Corporation	--None--
+AVB	AvalonBay Communities, Inc.	--None--
+AZO	AutoZone, Inc.	--None--
+ADP	Automatic Data Processing, Inc.	--None--
+ADSK	Autodesk, Inc.	--None--
+ATO	Atmos Energy Corporation	--None--
+T	AT&T Inc.	--None--
+AIZ	Assurant, Inc.	--None--
+AJG	Arthur J. Gallagher & Co.	--None--
+ANET	Arista Networks Inc	--None--
+ADM	Archer-Daniels-Midland Company	--None--
+ACGL	Arch Capital Group Ltd.	--None--
+APTV	Aptiv PLC	--None--
+AMAT	Applied Materials, Inc.	--None--
+AAPL	Apple Inc.	--None--
+APO	Apollo Global Management, Inc.	--None--
+APP	AppLovin Corporation	--None--
+APA	APA Corporation	--None--
+AON	Aon plc	--None--
+ADI	Analog Devices, Inc.	--None--
+APH	Amphenol Corporation	--None--
+AMGN	Amgen Inc.	--None--
+AME	AMETEK, Inc.	--None--
+AMP	Ameriprise Financial, Inc.	--None--
+AWK	American Water Works Company, Inc.	--None--
+AMT	American Tower Corporation	--None--
+AIG	American International Group, Inc.	--None--
+AXP	American Express Company	--None--
+AEP	American Electric Power Company, Inc.	--None--
+AEE	Ameren Corporation	--None--
+AMCR	Amcor plc	--None--
+AMZN	Amazon.com, Inc.	--None--
+MO	Altria Group, Inc.	--None--
+GOOG	Alphabet Inc.	--None--
+GOOGL	Alphabet Inc.	--None--
+ALL	The Allstate Corporation	--None--
+LNT	Alliant Energy Corporation	--None--
+ALLE	Allegion plc	--None--
+ALGN	Align Technology, Inc.	--None--
+ARE	Alexandria Real Estate Equities, Inc.	--None--
+ALB	Albemarle Corporation	--None--
+AKAM	Akamai Technologies, Inc.	--None--
+ABNB	Airbnb, Inc.	--None--
+APD	Air Products and Chemicals, Inc.	--None--
+A	Agilent Technologies, Inc.	--None--
+AFL	Aflac Incorporated	--None--
+AES	The AES Corporation	--None--
+AMD	Advanced Micro Devices, Inc.	--None--
+ADBE	Adobe Inc.	--None--
+ACN	Accenture plc	--None--
+ABBV	AbbVie Inc.	--None--
+ABT	Abbott Laboratories	--None--
+AOS	A. O. Smith Corporation	--None--
+MMM	3M Company	--None--
+CZR	Caesars Entertainment, Inc.	--None--
+ENPH	Enphase Energy, Inc.	--None--
+MKTX	MarketAxess Holdings Inc.	--None--

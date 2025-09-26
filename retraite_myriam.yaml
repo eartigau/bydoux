@@ -1,0 +1,97 @@
+nom: "Myriam"
+date_de_naissance: "1976-12-10"
+age_retraite: 60
+age_mort: 100
+
+salaire: 95000
+augmentations: 0.020
+
+
+inflation:
+  taux: 0.02
+  variations: 0.01
+
+rrq:
+  montant: 16775
+  taux_augmentation: 0.02
+
+securite_vieillesse:
+  montant: 12110
+
+fonds_pension:
+  55: 13200
+  60: 34000
+  65: 39300
+
+
+placements:
+  fonds_ftq: 
+    montant: 17000
+    cotisation_annuelle: 3500
+    rendement: 0.08
+    variations: 0.06
+    type: 'CELI'
+    description: "fonds_ftq-REER"
+  actions_americaines: 
+    montant: 11809
+    cotisation_annuelle: 0
+    rendement: 0.08
+    variations: 0.06
+    type: 'CELI'
+    description: "actions_americaines-CELI"
+  action_canadiennes:
+    montant: 19464.98
+    cotisation_annuelle: 0
+    rendement: 0.08
+    variations: 0.03
+    type: 'CELI'
+    description: "action_canadiennes-CELI"
+  actions_internationales:
+    montant: 6209.04
+    cotisation_annuelle: 0
+    rendement: 0.08
+    variations: 0.05
+    type: 'CELI'
+    description: "actions_internationales-CELI"
+  croissance_fiducieselect:
+    montant: 67570.79
+    cotisation_annuelle: 0
+    rendement: 0.08
+    variations: 0.04
+    type: 'CELI'
+    description: "croissance_fiducieselect-CELI"
+  fnb_revenu_fixe:
+      montant: 24969.14
+      cotisation_annuelle: 0
+      rendement: 0.08
+      variations: 0.03
+      description: "fnb_revenu_fixe-NON"
+      type: 'Non enregistré'
+  fonds_dividendes:
+      montant: 14311.30
+      cotisation_annuelle: 8580
+      rendement: 0.08
+      variations: 0.03
+      description: "fonds_dividendes-NON"
+      type: 'Non enregistré'
+  actions_internationales_2:
+      montant: 25355.22
+      cotisation_annuelle: 0
+      rendement: 0.08
+      variations: 0.03
+      description: "actions_internationales_2-NON"
+      type: 'Non enregistré'
+  actions_nasdaq_100:
+      montant: 20303.39
+      cotisation_annuelle: 0
+      rendement: 0.08
+      variations: 0.03
+      description: "actions_nasdaq_100-NON"
+      type: 'Non enregistré'
+  actions_americaines_2:
+      montant: 53420.08
+      cotisation_annuelle: 0
+      rendement: 0.08
+      variations: 0.03
+      description: "actions_americaines_2-NON"
+      type: 'Non enregistré'

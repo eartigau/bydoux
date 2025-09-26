@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Info sur {{ params['long_name'] }}</title>
+<!-- Styles -->
+<link rel="stylesheet" href="disnat-style.css">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+  body { margin: 0; }
+
+  /* Ajustement des filtres */
+  .filters input[type="number"] {
+    width: 5ch;
+    padding: 2px;
+    box-sizing: content-box;
+  }
+
+  /* --- Grille 2x2 pour graphiques --- */
+  .plots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* exactement 2 colonnes */
+    gap: 16px;
+    margin: 16px 0;
+  }
+  /* Responsive sur écran petit */
+  @media (max-width: 700px) {
+    .plots {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+    }
+  }
+
+  .plot-box {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+    background: white;
+    height: 0;
+    padding-bottom: 66.66%; /* ratio 3:2 */
+    position: relative;
+  }
+  .plot-box > div {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Info portefeuille à côté si écran large */
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .ticker-info {
+    flex: 1 1 300px;
+    min-width: 300px;
+    max-width: 400px;
+  }
+  .plots {
+    flex: 2 1 600px;
+    min-width: 300px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">FNB</div>
+        <h1>{{ params['long_name'] }}</h1>
+      </div>
+      <nav class="nav">
+        <a href="table_fnb.html">Accueil</a>
+        <a href="documentation.html">Documentation</a>
+      </nav>
+    </header>
+  </div>
+
+  <h2>Évolution du portefeuille et analyse</h2>
+
+  <div class="grid">
+    <div class="plots">
+      <div class="plot-box"><div id="graph1"></div></div>
+      <div class="plot-box"><div id="graph2"></div></div>
+      <div class="plot-box"><div id="graph3"></div></div>
+      <div class="plot-box"><div id="graph4"></div></div>
+    </div>
+
+    <div class="ticker-info card">
+      <h3>Infos Portefeuille</h3>
+      <p><span class="kicker">Ticker</span> <strong>{{ params['ticker'] }}</strong></p>
+      <p><span class="kicker">Nom</span> {{ params['long_name'] }}</p>
+      <p><span class="kicker">Âge du FNB</span> {{ params['duree'] }} ans</p>
+      <p><span class="kicker">Creux COVID-19</span> {{ params['covid_dip'] }}%</p>
+      <p><span class="kicker">Creux Tarif</span> {{ params['tarif_dip'] }}%</p>
+      <p><span class="kicker">Croissance annuelle [S&P500]</span> {{ params['croissance'] }} [{{ params['croissance_sp500'] }}] %</p>
+      <p><span class="kicker">Volatilité annuelle [S&P500]</span> {{ params['volatilite'] }} [{{ params['volatilite_sp500'] }}] %</p>
+    </div>
+  </div>
+
+<script>
+  // --- Données séries temporelles ---
+  const dates1 = {{ params['dates1'] }};
+  const close1 = {{ params['close1'] }};
+  const div1 = {{ params['div1'] }};
+  const log_close = {{ params['log_close'] }};
+  const log_sp500 = {{ params['log_sp500'] }};
+
+  // Graphique 1
+  const graph1 = document.getElementById("graph1");
+  Plotly.newPlot(graph1, [
+    {x:dates1, y:close1, type:"scatter", mode:"lines", name:"Prix", line:{color:"#007a33"}},
+    {x:dates1, y:div1, type:"scatter", mode:"lines", name:"+dividende", line:{color:"orange"}}
+  ], {margin:{t:30,l:50,r:30,b:40}, title:"Croissance de 10 000$", hovermode:"x unified"});
+
+  // Graphique 2
+  const graph2 = document.getElementById("graph2");
+  Plotly.newPlot(graph2, [
+    {x:dates1, y:log_close, type:"scatter", mode:"lines", name:"log(valeur)", line:{color:"#007a33"}},
+    {x:dates1, y:log_sp500, type:"scatter", mode:"lines", name:"log(S&P500)", line:{color:"orange"}}
+  ], {margin:{t:30,l:50,r:30,b:40}, title:"Comparaison avec S&P500", hovermode:"x unified"});
+
+  // --- Synchronisation axes X ---
+  graph1.on('plotly_relayout', function(e){
+    if(e['xaxis.range[0]'] && e['xaxis.range[1]']){
+      Plotly.relayout(graph2, {'xaxis.range':[e['xaxis.range[0]'], e['xaxis.range[1]']]});
+    }
+  });
+  graph2.on('plotly_relayout', function(e){
+    if(e['xaxis.range[0]'] && e['xaxis.range[1]']){
+      Plotly.relayout(graph1, {'xaxis.range':[e['xaxis.range[0]'], e['xaxis.range[1]']]});
+    }
+  });
+
+  // --- Graphique 3 : Scatter ---
+  let tickers = [{{ params['tickers'] }}];
+  let slope = [{{ params['slopes'] }}];
+  let volatility = [{{ params['sigmas'] }}];
+
+  let colors = tickers.map(t => t === "{{ params['ticker'] }}" ? "red" : "grey");
+  let sizes = tickers.map(t => t === "{{ params['ticker'] }}" ? 12 : 8);
+  let texts = tickers.map(t => t === "{{ params['ticker'] }}" ? t : "");
+  let hovertexts = tickers;
+
+  Plotly.newPlot("graph3", [{
+    x: slope,
+    y: volatility,
+    mode: "markers+text",
+    text: texts,
+    hovertext: hovertexts,
+    hoverinfo: "text",
+    textposition: "top center",
+    marker: { color: colors, size: sizes }
+  }], {
+    margin: {t:30, l:50, r:30, b:40},
+    title: "Slope vs Volatilité",
+    xaxis: {title: "Slope"},
+    yaxis: {title: "Volatilité"}
+  });
+
+  // --- Graphique 4 : Histogramme ---
+  let secteurs = [{{ params['sectors'] }}];
+  let fractions = [{{ params['fractions_sectors'] }}];
+
+  Plotly.newPlot("graph4", [{
+    x: secteurs,
+    y: fractions,
+    type: "bar",
+    text: secteurs,
+    textposition: "inside",
+    insidetextanchor: "middle",
+    textangle: -90,
+    marker: { color:["#e5f5e0","#c7e9c0","#a1d99b","#74c476","#41ab5d","#238b45","#006d2c","#00441b","#003314","#00220d","#001107"] }
+  }], {
+    margin:{t:30,l:50,r:30,b:40},
+    title:"Répartition par secteur",
+    yaxis:{title:"Fraction du portefeuille (%)"},
+    dragmode: false,
+    staticPlot: true
+  });
+</script>
+</body>
+</html>

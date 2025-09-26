@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Info sur Fidelity Global Core Plus Bond ETF</title>
+<!-- Styles -->
+<link rel="stylesheet" href="disnat-style.css">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+  body { margin: 0; }
+
+  /* Ajustement des filtres */
+  .filters input[type="number"] {
+    width: 5ch;
+    padding: 2px;
+    box-sizing: content-box;
+  }
+
+  /* --- Grille 2x2 pour graphiques --- */
+  .plots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* exactement 2 colonnes */
+    gap: 16px;
+    margin: 16px 0;
+  }
+  /* Responsive sur écran petit */
+  @media (max-width: 700px) {
+    .plots {
+      grid-template-columns: 1fr; /* 1 colonne sur mobile */
+    }
+  }
+
+  .plot-box {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+    background: white;
+    height: 0;
+    padding-bottom: 66.66%; /* ratio 3:2 */
+    position: relative;
+  }
+  .plot-box > div {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Info portefeuille à côté si écran large */
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .ticker-info {
+    flex: 1 1 300px;
+    min-width: 300px;
+    max-width: 400px;
+  }
+  .plots {
+    flex: 2 1 600px;
+    min-width: 300px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">FNB</div>
+        <h1>Fidelity Global Core Plus Bond ETF</h1>
+      </div>
+      <nav class="nav">
+        <a href="table_fnb.html">Accueil</a>
+        <a href="documentation.html">Documentation</a>
+      </nav>
+    </header>
+  </div>
+
+  <h2>Évolution du portefeuille et analyse</h2>
+
+  <div class="grid">
+    <div class="plots">
+      <div class="plot-box"><div id="graph1"></div></div>
+      <div class="plot-box"><div id="graph2"></div></div>
+      <div class="plot-box"><div id="graph3"></div></div>
+      <div class="plot-box"><div id="graph4"></div></div>
+    </div>
+
+    <div class="ticker-info card">
+      <h3>Infos Portefeuille</h3>
+      <p><span class="kicker">Ticker</span> <strong>FCGB.TO</strong></p>
+      <p><span class="kicker">Nom</span> Fidelity Global Core Plus Bond ETF</p>
+      <p><span class="kicker">Âge du FNB</span> 0.05 ans</p>
+      <p><span class="kicker">Creux COVID-19</span> --%</p>
+      <p><span class="kicker">Creux Tarif</span> --%</p>
+      <p><span class="kicker">Croissance annuelle [S&P500]</span> nan [12.7] %</p>
+      <p><span class="kicker">Volatilité annuelle [S&P500]</span> -- [4.2] %</p>
+    </div>
+  </div>
+
+<script>
+  // --- Données séries temporelles ---
+  const dates1 = ["2024-04-01","2024-04-05","2024-04-11","2024-04-12","2024-04-19"];;
+  const close1 =  [10000,9967,9865,9889,9870];;
+  const div1 =  [10000,9967,9865,9889,9870];;
+  const log_close =  [0.008181393969683981,0.004941499614751432,-0.005310159379496415,-0.0029709954172338904,-0.00484173878770644];;
+  const log_sp500 =  [0.018701904340284514,0.011154058176387593,0.010139046611110203,-0.00451854119113726,-0.03547646793664683];;
+
+  // Graphique 1
+  const graph1 = document.getElementById("graph1");
+  Plotly.newPlot(graph1, [
+    {x:dates1, y:close1, type:"scatter", mode:"lines", name:"Prix", line:{color:"#007a33"}},
+    {x:dates1, y:div1, type:"scatter", mode:"lines", name:"+dividende", line:{color:"orange"}}
+  ], {margin:{t:30,l:50,r:30,b:40}, title:"Croissance de 10 000$", hovermode:"x unified"});
+
+  // Graphique 2
+  const graph2 = document.getElementById("graph2");
+  Plotly.newPlot(graph2, [
+    {x:dates1, y:log_close, type:"scatter", mode:"lines", name:"log(valeur)", line:{color:"#007a33"}},
+    {x:dates1, y:log_sp500, type:"scatter", mode:"lines", name:"log(S&P500)", line:{color:"orange"}}
+  ], {margin:{t:30,l:50,r:30,b:40}, title:"Comparaison avec S&P500", hovermode:"x unified"});
+
+  // --- Synchronisation axes X ---
+  graph1.on('plotly_relayout', function(e){
+    if(e['xaxis.range[0]'] && e['xaxis.range[1]']){
+      Plotly.relayout(graph2, {'xaxis.range':[e['xaxis.range[0]'], e['xaxis.range[1]']]});
+    }
+  });
+  graph2.on('plotly_relayout', function(e){
+    if(e['xaxis.range[0]'] && e['xaxis.range[1]']){
+      Plotly.relayout(graph1, {'xaxis.range':[e['xaxis.range[0]'], e['xaxis.range[1]']]});
+    }
+  });
+
+  // --- Graphique 3 : Scatter ---
+  let tickers = ["BKCL.TO","DRFC.TO","ESGA.TO","HURA.TO","XUSC.TO","ZGQ.TO","ZLB.TO","ZQQ.TO","ZWE.TO","ZZZD.TO","ZWU.TO","ZWS.TO","ZWK.TO","ZVC.TO","ZUP.TO","ZUE.TO","ZUB.TO","ZRE.TO","ZPR.TO","ZPAY.TO","ZMT.TO","ZMI.TO","ZLSC.TO","ZLH.TO","ZLD.TO","ZJK.TO","ZIU.TO","ZHY.TO","ZHP.TO","ZGRO.TO","ZGI.TO","ZFN.TO","ZESG.TO","ZEQ.TO","ZEM.TO","ZEAT.TO","ZDV.TO","ZDJ.TO","ZDH.TO","ZCN.TO","ZCH.TO","ZBAL.TO","XWD.TO","XUU.TO","XUSR.TO","XUS.TO","XTR.TO","XSU.TO","XSPC.TO","XSMH.TO","XSI.TO","XSEA.TO","XSC.TO","XQQU.TO","XQLT.TO","XMY.TO","XMV.TO","XMTM.TO","XMM.TO","XMI.TO","XMD.TO","XMA.TO","XIU.TO","XINC.TO","XID.TO","XHY.TO","XHD.TO","XHAK.TO","XGI.TO","XFN.TO","XFLI.TO","XEXP.TO","XETM.TO","XEQT.TO","XEMC.TO","XEI.TO","XEG.TO","XEC.TO","XDUH.TO","XDSR.TO","XDNA.TO","XDGH.TO","XCV.TO","XCS.TO","XCLN.TO","XCH.TO","XCD.TO","XBAL.TO","XAGH.TO","XAD.TO","WSRI.TO","WOMN.TO","VXC.TO","VVL.TO","VUN.TO","VRIF.TO","VMO.TO","VIDY.TO","VGRO.TO","VGG.TO","VEQT.TO","VEE.TO","VDY.TO","VCNS.TO","VCIP.TO","VBG.TO","VA.TO","USSX.TO","USCL.TO","UMI.TO","UDIV.TO","UDA.TO","TULV.TO","TUED.TO","TTP.TO","TQSM.TO","TQGD.TO","TPU.TO","TPE.TO","TLV.TO","TKN.TO","TILV.TO","THE.TO","TGRE.TO","TGED.TO","TECX.TO","TECH.TO","TDOC.TO","TCLV.TO","TBAL.TO","STPL.TO","SMAX.TO","RUDH.TO","RUD.TO","RPDH.TO","RIT.TO","RIIN.TO","RIFI.TO","RID.TO","RCDC.TO","RBOT.TO","QDX.TO","QCLN.TO","QBTL.TO","PZW.TO","PXS.TO","PRP.TO","PR.TO","PMM.TO","PLV.TO","PINV.TO","PIN.TO","PHW.TO","PHE.TO","PFMN.TO","PFIA.TO","PFAA.TO","PDF.TO","PCOR.TO","PBI.TO","PAYF.TO","PACF.TO","ONEQ.TO","NXTG.TO","NVHE.TO","NUSA.TO","NSGE.TO","NREA.TO","NINT.TO","NGPE.TO","MWLV.TO","MUSA.TO","MULV.TO","MUB.TO","MSFH.TO","MORE.TO","MKB.TO","MIQE.TO","MINF.TO","MGRW.TO","MGDV.TO","MGAB.TO","MDIV.TO","MCSB.TO","MCLV.TO","MBAL.TO","LONG.TO","LLYH.TO","LIFE.TO","KNGX.TO","KNGC.TO","JAPN.TO","IWEB.TO","IUCE.TO","ISTE.TO","IQD.TO","INCM.TO","IITE.TO","IIAE.TO","IGCF.TO","IGAF.TO","IDR.TO","ICGB.TO","ICAE.TO","HYBR.TO","HXT.TO","HXQ.TO","HXE.TO","HXD.TO","HUTS.TO","HUTE.TO","HULC.TO","HTAE.TO","HSU.TO","HSD.TO","HQD.TO","HPF.TO","HOD.TO","HMMJ.TO","HLIT.TO","HIX.TO","HIND.TO","HHLE.TO","HGY.TO","HGRW.TO","HGR.TO","HGD.TO","HFIN.TO","HFD.TO","HEWB.TO","HERO.TO","HEQL.TO","HEJ.TO","HEE.TO","HEB.TO","HDIV.TO","HDGE.TO","HCLN.TO","HCA.TO","HBLK.TO","HBIE.TO","HBF.TO","HBAL.TO","HAZ.TO","HAF.TO","GRO.TO","GRCC.TO","GIQU.TO","GIES.TO","GEQT.TO","GDEP.TO","GCNS.TO","GBAL.TO","FUD.TO","FST.TO","FSF.TO","FOUR.TO","FLX.TO","FLUR.TO","FLOT.TO","FLI.TO","FLCD.TO","FINT.TO","FIE.TO","FHQ.TO","FHI.TO","FHG.TO","FHE.TO","FHC.TO","FGGE.TO","FGEB.TO","FDN.TO","FCVH.TO","FCUH.TO","FCSI.TO","FCQH.TO","FCIV.TO","FCII.TO","FCGI.TO","FCCV.TO","FCCQ.TO","FCCD.TO","FBT.TO","EVO.TO","ETSX.TO","ETP.TO","ETHI.TO","ESPX.TO","ESGY.TO","ESGG.TO","ESGE.TO","ESGC.TO","ESG.TO","EQY.TO","EQLI.TO","EQL.TO","EQCL.TO","EQCC.TO","ENCL.TO","ENCC.TO","EMAX.TO","EHE.TO","EGIF.TO","EDGF.TO","EDGE.TO","DXZ.TO","DXW.TO","DXUS.TO","DXU.TO","DXQ.TO","DXP.TO","DXN.TO","DXIF.TO","DXGE.TO","DXG.TO","DXF.TO","DXEM.TO","DXC.TO","DXAU.TO","DSAE.TO","DRMU.TO","DRME.TO","DRMD.TO","DRMC.TO","DRFU.TO","DRFG.TO","DRFE.TO","DRFD.TO","DMEU.TO","DMEI.TO","DIVS.TO","DISC.TO","DGRC.TO","DGR.TO","DCU.TO","DCS.TO","DCG.TO","DCC.TO","DATA.TO","DAMG.TO","CYH.TO","CYBR.TO","CWW.TO","CVLU.TO","CVD.TO","CUEI.TO","CUEH.TO","CUDV.TO","CUD.TO","CUBD.TO","CROP.TO","CPLS.TO","CPD.TO","COW.TO","COPP.TO","COMM.TO","CNV.TO","CNDX.TO","CNCL.TO","CNCC.TO","CNAO.TO","CMOM.TO","CMGG.TO","CMEY.TO","CMDO.TO","CMAR.TO","CMAG.TO","CLML.TO","CINV.TO","CINT.TO","CIF.TO","CIEM.TO","CIEI.TO","CIEH.TO","CIC.TO","CIBR.TO","CIAI.TO","CHPS.TO","CGXF.TO","CGRO.TO","CGRN.TO","CGRE.TO","CGRA.TO","CGR.TO","CGLO.TO","CGIN.TO","CGDV.TO","CGAA.TO","CFRT.TO","CFLX.TO","CEW.TO","CEQT.TO","CEMI.TO","CDZ.TO","CDIV.TO","CDEF.TO","CCRE.TO","CCOM.TO","CCNV.TO","CCNS.TO","CCEI.TO","CBUG.TO","CBNK.TO","CBL.TO","CBIN.TO","CBGR.TO","CBCX.TO","CBAL.TO","CARS.TO","CANL.TO","CALL.TO","BREA.TO","BNKL.TO","BND.TO","BNC.TO","BMAX.TO","BLOV.TO","BLCK.TO","BKCC.TO","BGU.TO","BGC.TO","BFIN.TO","BDIV.TO","BASE.TO","BANK.TO","ATSX.TO","ARTI.TO","ARB.TO","AMZH.TO","AMHE.TO","AMAX.TO","AIGO.TO","ADIV.TO","ACZ.TO","ACAA.TO","XUSC-U.TO","ZLU-U.TO","FCUV-U.TO","CINF.TO","DMEC.TO","EBNK.TO","FCUV.TO","VFV.TO","ZEA.TO","ZID.TO","ZLU.TO","ZUQ.TO","ZWG.TO","ZXM.TO","ZWT.TO","ZWP.TO","ZWHC.TO","ZUT.TO","ZUH.TO","ZUD.TO","ZSML.TO","ZPW.TO","ZPH.TO","ZNQ.TO","ZMID.TO","ZLSU.TO","ZLI.TO","ZLE.TO","ZJPN.TO","ZJG.TO","ZIN.TO","ZHU.TO","ZGSB.TO","ZGRN.TO","ZGD.TO","ZFC.TO","ZEQT.TO","ZEO.TO","ZEB.TO","ZDY.TO","ZDM.TO","ZDI.TO","ZCON.TO","ZCLN.TO","ZBK.TO","ZACE.TO","XVLU.TO","XUT.TO","XUSF.TO","XUH.TO","XSUS.TO","XST.TO","XSP.TO","XSMC.TO","XSEM.TO","XSE.TO","XRE.TO","XQQ.TO","XPF.TO","XMW.TO","XMU.TO","XMS.TO","XML.TO","XMH.TO","XMC.TO","XLVE.TO","XIT.TO","XIN.TO","XIC.TO","XHU.TO","XHC.TO","XGRO.TO","XGD.TO","XFLX.TO","XFH.TO","XEU.TO","XESG.TO","XEN.TO","XEM.TO","XEH.TO","XEF.TO","XDV.TO","XDU.TO","XDRV.TO","XDIV.TO","XDG.TO","XCSR.TO","XCNS.TO","XCHP.TO","XCG.TO","XBM.TO","XAW.TO","XAGG.TO","WXM.TO","WSRD.TO","VXM.TO","VVO.TO","VUS.TO","VSP.TO","VRE.TO","VIU.TO","VI.TO","VGH.TO","VGAB.TO","VEF.TO","VE.TO","VDU.TO","VCN.TO","VCE.TO","VBAL.TO","UTIL.TO","USSL.TO","USCC.TO","UMAX.TO","UDEF.TO","TXF.TO","TUEX.TO","TTTX.TO","TRVL.TO","TQGM.TO","TQCD.TO","TPRF.TO","TOWR.TO","TLF.TO","TINF.TO","THU.TO","TGRO.TO","TGGR.TO","TGAF.TO","TECI.TO","TEC.TO","TCON.TO","TBNK.TO","SYLD.TO","SPLT.TO","SKYY.TO","RUDC.TO","RPF.TO","RPD.TO","RIRA.TO","RIGE.TO","RIDH.TO","REIT.TO","RCD.TO","RBNK.TO","QCN.TO","QCE.TO","QAH.TO","PYF.TO","PXC.TO","PRA.TO","PPLN.TO","PMIF.TO","PLDI.TO","PINC.TO","PID.TO","PHR.TO","PFMS.TO","PFLS.TO","PFAE.TO","PDIV.TO","PDC.TO","PCON.TO","PBD.TO","PAGF.TO","PABF.TO","ONEC.TO","NXF.TO","NVDH.TO","NUBF.TO","NSCE.TO","NPRF.TO","NHYB.TO","NDIV.TO","MUSC.TO","MUMC.TO","MULC.TO","MSHE.TO","MREL.TO","MNXT.TO","MIVG.TO","MINT.TO","MHCD.TO","MGQE.TO","MGB.TO","MFT.TO","MCSM.TO","MCON.TO","MCLC.TO","LS.TO","LMAX.TO","LLHE.TO","LEAD.TO","KNGU.TO","JEPI.TO","IXTE.TO","IUTE.TO","IUAE.TO","ISIF.TO","INOC.TO","INAI.TO","IICE.TO","IGEO.TO","IGB.TO","IFRF.TO","ICTE.TO","ICCB.TO","HYLD.TO","HXU.TO","HXS.TO","HXF.TO","HXDM.TO","HXCN.TO","HUTL.TO","HUM.TO","HUBL.TO","HTA.TO","HSH.TO","HQU.TO","HPR.TO","HOG.TO","HND.TO","HMAX.TO","HLIF.TO","HIU.TO","HIG.TO","HHL.TO","HGU.TO","HGRO.TO","HGGG.TO","HFU.TO","HFG.TO","HEX.TO","HEU.TO","HEQT.TO","HEP.TO","HEF.TO","HED.TO","HEA.TO","HDIF.TO","HCON.TO","HCAL.TO","HBNK.TO","HBIG.TO","HBGD.TO","HBD.TO","HBA.TO","HAL.TO","HAC.TO","GRNI.TO","GLCC.TO","GIQG.TO","GGRO.TO","GDPY.TO","GCSC.TO","GCFE.TO","FXM.TO","FTHI.TO","FSR.TO","FPR.TO","FMAX.TO","FLUS.TO","FLSD.TO","FLJA.TO","FLCP.TO","FLAM.TO","FINO.TO","FHU.TO","FHM.TO","FHH.TO","FHF.TO","FHD.TO","FGO.TO","FGEP.TO","FGBL.TO","FDL.TO","FCUQ.TO","FCUD.TO","FCRR.TO","FCMI.TO","FCIQ.TO","FCID.TO","FCGB.TO"];
+  let slope = [0.155,0.009,0.01,0.181,0.014,0.03,0.02,0.059,0.019,-0.049,-0.001,0.013,-0.006,0.014,-0.031,0.023,-0.013,0.006,-0.035,0.024,-0.096,-0.019,0.033,-0.013,-0.037,-0.016,0.054,-0.017,-0.048,-0.025,0.017,-0.006,-0.046,0.001,-0.036,-0.191,0.002,0.01,0.004,-0.006,-0.067,-0.048,0.023,0.029,0.034,0.045,0.007,-0.009,-0.0,-0.039,-0.059,-0.014,-0.068,0.0,0.03,-0.034,-0.001,-0.002,-0.044,-0.023,0.011,-0.065,0.026,-0.072,-0.013,-0.018,-0.014,0.017,-0.006,0.042,0.003,-0.051,0.0,0.013,-0.039,0.01,-0.029,-0.032,-0.023,-0.014,-0.222,-0.011,0.006,-0.043,-0.309,-0.059,-0.012,-0.014,0.0,0.117,0.021,0.026,0.007,-0.007,0.036,-0.027,0.004,0.024,-0.028,0.03,0.005,-0.031,0.022,-0.05,-0.077,-0.087,-0.026,0.032,0.149,-0.022,-0.018,0.03,-0.002,0.066,0.006,0.025,0.044,0.034,-0.02,-0.005,0.012,-0.021,-0.003,-0.045,0.058,0.128,0.081,-0.029,0.017,-0.006,-0.039,0.121,0.014,0.036,-0.015,0.032,0.015,-0.095,-0.016,0.011,-0.069,-0.021,-0.121,-0.11,-0.018,0.016,-0.051,-0.028,-0.104,-0.038,-0.112,-0.016,-0.067,-0.056,-0.035,-0.026,-0.072,0.002,-0.065,-0.027,0.035,0.0,-0.012,-0.149,0.381,0.028,-0.048,-0.021,-0.054,0.032,0.039,0.043,-0.006,-0.051,0.19,0.12,-0.074,0.156,-0.038,0.009,0.019,-0.085,0.057,-0.066,0.0,-0.02,0.003,-0.077,0.055,0.043,0.048,0.077,-0.017,-0.029,-0.042,-0.01,-0.03,0.016,0.014,-0.078,-0.048,-0.012,-0.13,0.009,-0.021,-0.025,0.067,-0.069,-0.269,-0.071,0.037,0.162,0.194,0.032,-0.353,-0.466,-0.012,-0.273,-0.325,-0.365,-0.134,0.02,-0.018,-0.031,-0.001,-0.052,-0.438,0.103,-0.324,-0.0,-0.047,0.0,-0.094,-0.164,0.072,0.12,0.008,-0.282,0.055,0.013,0.02,0.049,-0.037,0.018,-0.049,0.026,0.0,-0.022,-0.04,0.028,-0.023,-0.025,-0.012,-0.016,-0.003,-0.014,-0.023,0.049,-0.01,-0.115,0.027,0.023,-0.031,0.03,0.062,0.041,0.01,-0.152,-0.116,-0.071,-0.002,-0.085,0.064,0.002,-0.025,0.008,0.051,-0.01,-0.019,0.041,-0.004,0.001,-0.03,0.056,0.052,-0.049,0.003,0.067,0.037,0.021,-0.014,0.013,0.044,0.048,0.024,0.017,0.103,0.102,0.116,-0.07,-0.086,-0.02,-0.081,-0.068,-0.017,-0.03,-0.05,0.039,-0.006,0.04,-0.005,-0.035,-0.008,0.0,0.015,0.008,-0.155,0.015,0.0,-0.032,0.021,-0.075,-0.005,0.017,-0.006,-0.021,-0.02,-0.043,0.035,0.043,-0.032,-0.003,0.002,0.014,-0.074,-0.07,-0.071,-0.058,-0.019,-0.153,-0.007,-0.007,0.024,-0.038,-0.028,0.035,0.121,-0.038,-0.007,0.0,-0.013,-0.048,-0.036,-0.001,-0.007,0.001,0.012,0.119,0.09,-0.001,0.043,0.022,0.05,-0.043,-0.043,-0.072,-0.026,0.076,0.063,-0.055,0.001,-0.042,0.023,0.08,0.033,-0.008,0.101,0.07,-0.008,-0.002,-0.133,-0.03,-0.012,-0.012,-0.016,-0.05,-0.059,0.01,-0.028,-0.044,0.026,0.021,-0.034,0.014,0.031,-0.008,-0.048,-0.126,-0.085,-0.088,-0.009,0.049,0.045,0.041,-0.061,-0.013,0.231,-0.03,-0.095,0.084,0.003,-0.016,0.152,-0.05,0.021,0.063,-0.008,0.005,0.012,-0.002,-0.031,0.02,0.025,0.063,0.13,0.031,0.079,-0.03,0.16,0.187,0.374,0.102,0.028,-0.032,-0.057,0.014,0.009,0.015,0.022,0.103,0.201,0.101,0.047,-0.015,0.007,0.024,0.045,0.044,0.001,0.142,0.022,-0.073,0.009,0.006,0.001,-0.009,0.001,-0.0,0.045,0.013,0.015,-0.047,-0.088,0.011,-0.106,-0.002,-0.064,-0.061,0.027,-0.021,-0.035,-0.034,-0.062,0.027,0.025,-0.003,-0.012,-0.069,-0.209,-0.006,0.038,-0.003,0.003,0.0,0.008,0.024,0.015,0.014,-0.013,-0.072,-0.073,0.036,0.057,-0.034,-0.002,0.024,-0.019,-0.036,-0.024,-0.004,-0.01,0.025,-0.008,0.023,-0.007,-0.001,-0.009,-0.049,0.0,-0.015,-0.013,0.006,-0.006,-0.045,-0.007,-0.014,0.016,-0.005,-0.157,0.031,-0.003,0.013,-0.05,-0.081,-0.018,-0.008,0.004,0.0,-0.002,-0.048,-0.015,-0.04,0.016,0.02,-0.017,-0.025,-0.008,0.007,-0.085,-0.008,-0.012,-0.02,0.001,0.009,-0.031,-0.093,0.031,0.063,0.041,-0.07,0.104,0.015,-0.004,-0.006,-0.003,0.055,0.022,-0.106,0.092,0.022,0.015,0.024,0.015,-0.001,0.019,0.052,-0.034,0.071,0.022,-0.002,-0.08,-0.013,-0.023,-0.02,-0.018,-0.026,-0.009,-0.039,0.002,0.026,0.02,-0.045,0.019,-0.012,0.005,-0.024,-0.003,-0.044,-0.021,-0.018,-0.004,-0.023,-0.064,-0.001,0.067,0.061,0.012,-0.055,-0.05,0.018,0.005,-0.033,0.017,0.31,-0.044,0.021,0.005,-0.01,0.004,-0.054,-0.024,0.001,0.241,0.02,-0.01,-0.019,-0.004,-0.049,0.073,-0.068,-0.012,0.004,-0.042,0.01,-0.049,-0.013,-0.121,0.05,-0.087,-0.041,-0.013,0.017,-0.051,-0.075,-0.003,0.126,-0.003,-0.053,-0.05,-0.206,-0.114,-0.125,0.102,-0.05,0.037,-0.011,-0.051,-0.0,0.006,0.039,-0.015,0.122,0.12,0.106,-0.033,-0.05,-0.245,0.1,0.002,-0.256,0.001,0.045,-0.246,-0.005,-0.034,-0.007,0.095,-0.082,-0.262,0.0,-0.107,-0.063,-0.26,-0.012,0.053,-0.062,0.066,0.104,0.004,0.356,-0.22,0.109,0.002,-0.027,-0.101,-0.008,-0.009,0.005,0.02,0.017,0.11,-0.006,-0.004,-0.011,-0.017,0.172,0.029,-0.047,-0.032,-0.054,0.033,0.002,-0.103,-0.06,-0.033,-0.14,-0.021,-0.104,0.033,-0.027,-0.005,0.031,0.022,0.022,-0.026,-0.025,0.0,0.0];
+  let volatility = [0.948,1.132,1.016,2.242,1.017,0.989,1.04,1.387,0.921,0.651,1.05,0.891,1.967,1.208,0.805,1.067,2.512,1.622,1.551,0.398,3.922,0.666,0.464,0.612,0.708,0.551,0.579,1.676,0.942,1.515,1.703,0.815,1.523,0.776,1.265,1.276,1.077,1.073,1.064,1.011,3.785,1.516,1.125,0.854,1.136,0.901,0.908,1.199,0.887,1.406,0.481,0.836,0.442,0.0,0.889,0.58,0.767,1.298,0.877,1.48,0.715,1.378,0.552,0.544,1.696,1.594,0.85,1.155,1.094,0.643,0.406,0.844,0.0,0.817,0.81,1.194,1.958,1.204,0.675,0.974,1.827,0.615,0.747,1.119,1.931,2.63,1.21,0.503,0.0,0.847,0.584,0.655,0.845,1.471,0.902,0.559,1.075,0.912,0.707,0.638,0.815,1.127,1.155,0.567,0.533,0.624,0.919,1.102,1.168,1.227,0.615,0.706,0.5,1.044,0.915,0.682,0.619,0.88,0.913,1.164,3.863,0.751,0.861,0.955,0.963,2.023,2.112,0.501,0.681,0.698,0.526,1.126,0.941,0.8,0.995,2.525,0.609,0.536,0.996,0.769,2.091,0.883,2.75,0.999,1.08,0.865,0.349,1.393,0.981,0.558,1.99,0.679,0.882,0.88,0.302,0.371,0.229,0.824,0.453,1.634,0.406,0.0,1.019,3.179,3.044,0.977,1.059,0.803,0.989,1.482,0.517,1.133,0.825,0.559,1.122,0.767,0.685,0.546,0.696,0.755,0.646,0.705,0.971,0.37,0.0,0.775,1.011,1.14,0.747,0.782,1.414,1.134,0.24,1.017,1.145,0.763,1.099,0.972,0.647,0.771,0.88,2.045,0.178,0.81,1.478,1.057,1.338,4.823,3.946,1.795,1.291,2.101,2.497,4.764,4.896,7.296,2.545,7.703,4.549,2.142,5.753,0.919,1.598,1.607,0.546,1.183,6.371,1.427,3.857,1.285,1.949,0.0,3.558,7.128,1.172,0.694,1.087,0.964,1.163,4.317,0.609,1.231,0.827,1.038,0.856,0.705,0.0,1.584,0.637,1.01,0.38,0.68,0.813,0.856,1.099,1.924,1.838,0.298,0.906,1.185,1.481,0.807,1.004,1.471,1.622,1.005,1.127,3.226,2.155,1.005,0.46,2.027,0.98,1.045,0.979,0.856,0.792,0.599,0.692,0.88,0.834,1.025,1.172,0.641,0.772,0.636,1.303,0.978,0.853,0.811,0.777,0.759,0.769,0.601,0.771,0.831,0.766,0.695,1.089,5.001,1.252,1.084,0.624,1.222,1.86,0.857,0.951,1.289,1.142,0.673,1.3,0.621,1.345,0.523,1.435,1.304,1.087,1.077,0.0,0.878,0.887,1.195,1.23,0.932,0.828,0.899,0.963,1.05,1.131,0.653,1.287,1.189,0.712,0.754,0.607,0.318,0.357,0.393,2.027,0.494,1.113,1.853,1.032,0.847,0.658,0.985,1.825,0.796,1.263,0.0,0.445,0.597,0.947,1.133,2.52,1.253,0.342,0.712,0.614,1.095,1.067,1.152,1.656,0.297,0.286,0.394,1.522,1.614,2.143,0.894,1.211,0.956,0.82,1.171,1.432,1.457,2.033,1.877,1.754,0.592,1.004,0.822,0.572,2.078,0.809,0.267,0.592,1.984,0.273,1.032,1.122,0.776,0.912,0.682,0.644,0.839,0.5,0.718,0.457,0.635,0.897,1.436,1.615,0.423,0.4,0.477,4.855,0.431,4.001,0.795,2.076,1.039,1.264,0.497,1.138,0.889,0.615,1.013,1.404,0.756,0.68,1.352,0.964,1.501,1.269,0.694,2.385,0.332,1.815,2.262,1.592,1.414,0.494,1.43,0.585,0.893,0.724,1.091,0.424,0.711,1.146,0.644,1.02,0.873,1.921,1.133,0.956,0.502,1.151,1.757,0.851,1.124,1.412,2.535,0.999,1.112,0.799,0.742,1.287,0.886,0.682,0.884,1.038,0.652,5.399,1.28,0.991,0.658,0.801,3.06,0.663,2.614,3.707,1.324,1.24,1.093,1.062,1.461,1.025,2.066,1.181,0.828,1.245,0.0,1.039,0.878,1.539,1.211,1.135,1.149,0.659,1.28,1.477,1.017,1.263,1.382,0.745,0.736,1.243,0.977,2.199,1.877,0.927,0.6,0.694,1.385,0.737,1.589,0.0,0.922,0.965,0.854,0.795,1.301,0.836,0.95,0.624,0.527,1.321,0.94,0.513,1.057,0.597,2.22,0.802,2.973,0.84,0.0,1.134,1.159,1.811,0.677,1.121,0.98,1.266,0.95,0.882,0.767,0.226,1.055,0.999,0.893,1.069,0.958,0.624,1.499,1.484,0.838,0.568,0.81,1.772,1.072,1.358,1.368,0.694,0.894,1.288,1.012,1.582,0.591,1.055,0.767,0.972,0.975,1.818,1.53,0.641,1.082,0.293,0.25,2.155,0.802,1.373,1.125,0.52,0.88,1.031,0.936,1.049,1.348,0.831,0.82,1.049,0.396,1.315,1.657,1.722,0.447,0.136,1.004,0.934,1.096,0.612,0.553,0.832,2.126,1.053,0.401,0.453,0.407,0.259,0.572,2.452,2.385,0.362,0.58,1.191,0.269,0.58,1.235,1.114,0.979,1.529,1.444,0.888,0.689,0.905,0.727,0.971,0.527,0.607,0.982,0.726,0.955,0.727,1.03,1.517,1.849,1.284,0.642,0.947,1.62,0.805,0.551,0.836,1.688,1.087,1.138,0.501,0.231,0.798,0.166,1.163,3.837,1.137,1.214,0.898,0.791,0.72,1.407,1.848,1.58,2.421,5.826,1.294,2.14,11.054,0.942,0.885,1.099,0.969,1.132,6.505,0.998,2.224,3.667,0.962,2.476,7.188,1.015,5.512,2.821,11.225,1.577,0.938,0.739,1.406,1.02,0.483,4.94,3.127,0.976,0.845,0.8,1.048,2.702,1.664,0.925,0.633,0.769,0.897,1.66,0.837,1.275,1.053,1.221,0.771,0.197,0.899,0.332,0.865,1.951,2.164,1.157,1.164,2.536,1.589,0.463,0.749,0.275,1.397,0.729,0.849,0.729,0.815,1.063,1.142,0.0];
+
+  let colors = tickers.map(t => t === "FCGB.TO" ? "red" : "grey");
+  let sizes = tickers.map(t => t === "FCGB.TO" ? 12 : 8);
+  let texts = tickers.map(t => t === "FCGB.TO" ? t : "");
+  let hovertexts = tickers;
+
+  Plotly.newPlot("graph3", [{
+    x: slope,
+    y: volatility,
+    mode: "markers+text",
+    text: texts,
+    hovertext: hovertexts,
+    hoverinfo: "text",
+    textposition: "top center",
+    marker: { color: colors, size: sizes }
+  }], {
+    margin: {t:30, l:50, r:30, b:40},
+    title: "Slope vs Volatilité",
+    xaxis: {title: "Slope"},
+    yaxis: {title: "Volatilité"}
+  });
+
+  // --- Graphique 4 : Histogramme ---
+  let secteurs = ["realestate","consumer_cyclical","basic_materials","consumer_defensive","technology","communication_services","financial_services","utilities","industrials","energy","healthcare"];
+  let fractions = [0.0,7.249999999999999,0.0,12.04,0.0,7.9799999999999995,0.0,7.7700000000000005,0.0,64.959997,0.0];
+
+  Plotly.newPlot("graph4", [{
+    x: secteurs,
+    y: fractions,
+    type: "bar",
+    text: secteurs,
+    textposition: "inside",
+    insidetextanchor: "middle",
+    textangle: -90,
+    marker: { color:["#e5f5e0","#c7e9c0","#a1d99b","#74c476","#41ab5d","#238b45","#006d2c","#00441b","#003314","#00220d","#001107"] }
+  }], {
+    margin:{t:30,l:50,r:30,b:40},
+    title:"Répartition par secteur",
+    yaxis:{title:"Fraction du portefeuille (%)"},
+    dragmode: false,
+    staticPlot: true
+  });
+</script>
+</body>
+</html>
